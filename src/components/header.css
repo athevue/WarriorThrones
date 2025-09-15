@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Main header container: stacked vertically */
+  .header-container {
+    background-color: #0C584F; /* WSU green */
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column; /* stack top row + stats */
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Top row: title/caption left, button right */
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* Title styling */
+  .header-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    color: #FAD037; /* WSU yellow */
+  }
+  
+  /* Caption styling */
+  .header-caption {
+    font-size: 1rem;
+    color: #D1FAE5; /* lighter green */
+    margin-top: 0.25rem;
+  }
+  
+  /* Button styling */
+  .header-button {
+    background-color: #FAD037; /* WSU yellow */
+    color: #111827;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .header-button:hover {
+    background-color: #F59E0B; /* darker yellow */
+  }
+  
+  /* Button icon */
+  .button-icon {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  /* Stats section below top row */
+  .stats-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 1rem; /* spacing between cards */
+    margin-top: 1.5rem; /* space below top row */
+    width: 100%;
+  }
+  
+  /* Individual stat cards */
+  .stats-card {
+    background-color: rgba(255, 255, 255, 0.1); /* subtle translucent card */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+  }
+  
+  /* Stat title */
+  .stats-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+  }
+  
+  /* Stat value */
+  .stats-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+  }
+  
