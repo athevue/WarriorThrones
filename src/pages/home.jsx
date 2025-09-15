@@ -1,4 +1,5 @@
 import Header from "../components/header";
+import Quick from "../components/quickActions";
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
       <main className="flex-1 max-w-4xl mx-auto p-6">
         <p className="text-black">Welcome! Here will be the rest of the components.</p>
       </main>
+      <Quick />
     </div>
   );
 }
