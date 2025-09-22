@@ -6,7 +6,7 @@ export default function Header() {
       {/* Top row: title + caption (left) and button (right) */}
       <div className="header-top flex items-center justify-between w-full">
         <div>
-          <h1 className="header-title">Warrior Thrones</h1>
+          <h1 className="header-title">Warrior Thrones Test</h1>
           <p className="header-caption">
             Find and rate the best restrooms on campus
           </p>
