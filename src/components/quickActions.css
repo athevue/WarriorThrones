@@ -2,16 +2,22 @@
     padding: 2rem;
 }
 
-.quickActionsTitle {
-    display: flex;
-    color: red;
-}
   
 .quickActionsSection {
     gap: 3rem;
 }
 
 .quick-button {
-    color: red;
-    background-color: orange;
+    color: black;
+    background-color: #FAD037;
 }
+
+.buttons {
+    gap: 3rem;
+}
+
+h1{
+    color: #FAD037;
+    display: flex;
+}
+
