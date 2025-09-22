@@ -24,7 +24,7 @@ body {
   
   /* Title styling */
   .header-title {
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: 700;
     margin: 0;
     color: #FAD037; /* WSU yellow */
@@ -32,9 +32,10 @@ body {
   
   /* Caption styling */
   .header-caption {
-    font-size: 1rem;
+    font-size: .9rem;
     color: #D1FAE5; /* lighter green */
     margin-top: 0.25rem;
+    margin-left: 0.3em;
   }
   
   /* Button styling */

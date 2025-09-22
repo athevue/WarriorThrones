@@ -1,23 +1,44 @@
 .quickActionsSection {
     padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 1.5rem; /* space between buttons */
+    max-width: 400px; /* optional: limit width */
+    margin: auto; /* center section */
 }
 
-  
-.quickActionsSection {
-    gap: 3rem;
+h1 {
+    color: #FAD037;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 1rem; /* space between buttons */
 }
 
 .quick-button {
     color: black;
     background-color: #FAD037;
-}
-
-.buttons {
-    gap: 3rem;
-}
-
-h1{
-    color: #FAD037;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
 }
 
+.quick-button:hover {
+    background-color: #F59E0B;
+}
+
+.button-icon {
+    font-weight: bold;
+}
