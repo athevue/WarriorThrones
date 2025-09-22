@@ -1,0 +1,17 @@
+.quickActionsSection {
+    padding: 2rem;
+}
+
+.quickActionsTitle {
+    display: flex;
+    color: red;
+}
+  
+.quickActionsSection {
+    gap: 3rem;
+}
+
+.quick-button {
+    color: red;
+    background-color: orange;
+}
