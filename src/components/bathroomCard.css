@@ -1,0 +1,33 @@
+.bathroom-card {
+    display: flex; 
+    flex-direction: column; /* Stacks children vertically */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1em;
+    margin: 1em auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 1em; 
+    width: 90%; 
+    max-width: 800px;
+}
+
+.bathroom-name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.bathroom-rating {
+    color: #ffcc00;
+    font-size: 1.2em;
+}
+
+.bathroom-location{
+    font-size: 1em;
+    color: #666;
+}
+
+.bathroom-reviews{
+    font-size: 0.9em;
+    color: #333;
+}

@@ -42,14 +42,14 @@ export default function Header() {
           <div className="modal-content">
             <h2 className="text-xl font-bold mb-4">Add Bathroom</h2>
             <form>
-              <label className="block mb-3">
+              <label className="inputTextName">
                 Name:
-                <input type="text" className="border p-1 ml-2 rounded" />
+                <input type="text" className="inputText rounded" />
               </label>
               <br></br>
-              <label className="block mb-3">
+              <label className="inputTextName">
                 Location:
-                <input type="text" className="border p-1 ml-2 rounded" />
+                <input type="text" className="inputText rounded" />
               </label>
 
               <div className="flex gap-2 mt-4">
