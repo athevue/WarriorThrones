@@ -1,33 +1,69 @@
+/* Container for each bathroom card */
 .bathroom-card {
-    display: flex; 
-    flex-direction: column; /* Stacks children vertically */
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 12px; 
+    padding: 1.5em 1.2em;
     margin: 1em auto;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    gap: 1em; 
-    width: 90%; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    width: 90%;
     max-width: 800px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.bathroom-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Bathroom name */
 .bathroom-name {
-    font-size: 1.5em;
-    font-weight: bold;
+    font-size: clamp(1.3rem, 2vw, 1.8rem); 
+    font-weight: 700;
+    color: #0C584F; 
+    margin-bottom: 0.2em;
 }
 
+/* Bathroom rating (stars or numeric) */
 .bathroom-rating {
-    color: #ffcc00;
-    font-size: 1.2em;
+    color: #ffcc00; 
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    font-weight: 600;
 }
 
-.bathroom-location{
-    font-size: 1em;
-    color: #666;
+/* Bathroom location */
+.bathroom-location {
+    font-size: clamp(0.9rem, 1vw, 1.1rem);
+    color: #666666; 
+    line-height: 1.3;
 }
 
-.bathroom-reviews{
-    font-size: 0.9em;
-    color: #333;
+/* Number of reviews or additional info */
+.bathroom-reviews {
+    font-size: clamp(0.8rem, 0.9vw, 1rem);
+    color: #444444;
+    font-weight: 500;
+}
+
+/* Responsive layout tweaks */
+@media (max-width: 480px) {
+    .bathroom-card {
+        padding: 1em;
+        gap: 0.6em;
+    }
+
+    .bathroom-name {
+        font-size: 1.3rem;
+    }
+
+    .bathroom-rating {
+        font-size: 1rem;
+    }
+
+    .bathroom-location, 
+    .bathroom-reviews {
+        font-size: 0.9rem;
+    }
 }
