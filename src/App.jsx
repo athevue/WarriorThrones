@@ -10,15 +10,3 @@ function App() {
 
 export default App;
 
-// import TestSupabase from "./components/test";
-
-// function App() {
-//   return (
-//     <div>
-//       <h1>Supabase Test</h1>
-//       <TestSupabase />
-//     </div>
-//   );
-// }
-
-// export default App;
