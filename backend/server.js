@@ -1,3 +1,7 @@
+// endpoint link
+// http://127.0.0.1:5001/api/reviews/all
+
+
 // backend/server.js
 const express = require("express");
 const cors = require("cors");

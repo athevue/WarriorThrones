@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllReviews, getCountReviews
+  getAllReviews, getCountReviews, getAverageRating
 } = require("../controllers/reviewsController");
 
 
@@ -9,6 +9,11 @@ const {
 router.get("/count", (req, res) => {
     console.log("GET /api/reviews/count called");
     getCountReviews(req, res); 
+});
+
+router.get("/average", (req, res) => {
+    console.log("GET /api/reviews/average called");
+    getAverageRating(req, res); 
 });
 
 // NEW route to get all reviews

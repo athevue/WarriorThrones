@@ -16,6 +16,24 @@ async function getCountReviews(req, res) {
     }
 }
 
+// Get average rating
+async function getAverageRating(req, res) {
+  try {
+    const { data, error } = await supabase
+      .from("BathroomRating")
+      .select("overallRating", { count: "exact" });
+
+    if (error) throw error;
+
+    const totalRatings = data.reduce((sum, review) => sum + review.overallRating, 0);
+    const averageRating = data.length ? totalRatings / data.length : 0;
+
+    res.json({ averageRating });
+  } catch (err) {
+    console.error("Error fetching average rating:", err);
+    res.status(500).json({ error: "Failed to fetch average rating" });
+  }
+}
 
 // NEW: Fetch all reviews
 async function getAllReviews(req, res) {
@@ -32,5 +50,6 @@ async function getAllReviews(req, res) {
 
 module.exports = {
     getCountReviews,
+    getAverageRating,
     getAllReviews
 };

@@ -4,8 +4,11 @@ import "./Header.css";
 export default function Header() {
   const [showForm, setShowForm] = useState(false);
   const [totalReviews, setTotalReviews] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
+
+    // fetch total reviews
     async function fetchTotalReviews() {
       try {
         const res = await fetch("http://127.0.0.1:5001/api/reviews/count");
@@ -16,7 +19,19 @@ export default function Header() {
       }
     }
 
+    // fetch average rating
+    async function fetchAverageRating() {
+        try {
+          const res = await fetch("http://127.0.0.1:5001/api/reviews/average")
+          const data = await res.json();
+          setAverageRating(data.averageRating.toFixed(2));
+        } catch (err) {
+          console.error("Error fetching average rating:", err);
+        }
+    }
     fetchTotalReviews();
+    fetchAverageRating();
+
   }, []);
 
   return (
@@ -36,7 +51,7 @@ export default function Header() {
       <div className="stats-section grid grid-cols-2 gap-4 mt-6 w-full">
         <div className="stats-card">
           <h2 className="stats-title">Average Rating</h2>
-          <p className="stats-value">–</p>
+          <p className="stats-value">{averageRating}</p>
         </div>
         
         <div className="stats-card">
