@@ -1,6 +1,7 @@
 import Header from "../components/header";
 import Quick from "../components/quickActions";
 import TopRated from "../components/topRated";
+import RecentActivity from "../components/recentActivity";
 
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Header />
       <Quick />
       <TopRated />
+      <RecentActivity />
     </div>
   );
 }

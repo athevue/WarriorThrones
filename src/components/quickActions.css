@@ -39,4 +39,10 @@ h1 {
 
 .button-icon {
     font-weight: bold;
+    display: block; /* forces icon on its own line */
+    margin-bottom: 4px; /* optional spacing */
 }
+
+.button-text {
+    display: block; /* puts text on new line */
+  }

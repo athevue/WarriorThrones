@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import "./Header.css";
 
+// Hiding internal data and controlling how that data is being accessed
+// This code shows encapsulation because total reviews is private to the component
+// and can only be changed through fetchTotalReviews, preventing outside code 
+// from directly accessing or modifying it.
 export default function Header() {
   const [showForm, setShowForm] = useState(false);
   const [totalReviews, setTotalReviews] = useState(0);
@@ -36,9 +40,9 @@ export default function Header() {
 
   return (
     <header className="header-container">
-      <div className="header-top flex items-center justify-between w-full">
+      <div className="header-top">
         <div>
-          <h1 className="header-title">Warrior Thrones Test</h1>
+          <h1 className="header-title">Warrior Thrones</h1>
           <p className="header-caption">Find and rate the best restrooms on campus</p>
         </div>
 
@@ -48,7 +52,7 @@ export default function Header() {
       </div>
 
       {/* Stats section */}
-      <div className="stats-section grid grid-cols-2 gap-4 mt-6 w-full">
+      <div className="stats-section">
         <div className="stats-card">
           <h2 className="stats-title">Average Rating</h2>
           <p className="stats-value">{averageRating}</p>
@@ -64,22 +68,21 @@ export default function Header() {
       {showForm && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2 className="text-xl font-bold mb-4">Add Bathroom</h2>
+            <h2 className="text-xl">Add Bathroom</h2>
             <form>
               <label className="inputTextName">
                 Name:
-                <input type="text" className="inputText rounded" />
+                <input type="text" className="inputText" />
               </label>
               <br />
               <label className="inputTextName">
                 Location:
-                <input type="text" className="inputText rounded" />
+                <input type="text" className="inputText" />
               </label>
 
-              <div className="flex gap-2 mt-4">
+              <div className="flex">
                 <button
                   type="button"
-                  className="px-4 py-2 bg-gray-400 text-white rounded"
                   onClick={() => setShowForm(false)}
                 >
                   Cancel
@@ -87,7 +90,6 @@ export default function Header() {
 
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded"
                 >
                   Save
                 </button>

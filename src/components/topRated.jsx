@@ -5,22 +5,22 @@ import BathroomCard from "./bathroomCard";
 export default function Header() {
     const bathrooms = [
         {
-            name: "Central Park Restroom",
-            rating: 4.8,
-            location: "Central Park, NYC",
-            numReviews: 120
+            name: "State Hall Bathroom",
+            rating: 9.5,
+            location: "Room 204",
+            numReviews: 25
         },
         {
-            name: "Downtown Public Bathroom",
-            rating: 4.7,
-            location: "5th Avenue, NYC",
-            numReviews: 95
+            name: "Student Center Bathroom",
+            rating: 8.9,
+            location: "Room 101",
+            numReviews: 10
         },
         {
-            name: "Riverside Restroom",
-            rating: 4.9,
-            location: "Riverside Drive, NYC",
-            numReviews: 150
+            name: "STEM Building Bathroom",
+            rating: 6.7,
+            location: "Room 002",
+            numReviews: 17
         }
     ]
     
@@ -33,7 +33,7 @@ export default function Header() {
                             key={index}
                             name={bathroom.name}
                             rating={bathroom.rating}
-                            description={bathroom.location}
+                            location={bathroom.location}
                             numReviews={bathroom.numReviews}
                         />
                     ))}
