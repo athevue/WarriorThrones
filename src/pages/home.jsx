@@ -1,7 +1,7 @@
-import Header from "../components/header";
-import Quick from "../components/quickActions";
-import TopRated from "../components/topRated";
-import RecentActivity from "../components/recentActivity";
+import Header from "../components/homeComponents/header";
+import Quick from "../components/homeComponents/quickActions";
+import TopRated from "../components/homeComponents/topRated";
+import RecentActivity from "../components/homeComponents/recentActivity";
 
 
 export default function Home() {
