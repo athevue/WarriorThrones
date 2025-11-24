@@ -66,8 +66,8 @@ export default function Header() {
 
       {/* Modal Overlay */}
       {showForm && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className="modal-overlay" onClick={() => setShowForm(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-xl">Add Bathroom</h2>
             <form>
               <label className="inputTextName">
