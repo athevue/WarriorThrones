@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = "http://localhost:5001"; // change later if your team uses env vars
+const API_BASE_URL = "http://localhost:5001/api/reviews";
 
 // --- SearchBar ---
 function SearchBar({ initialValue = "", onSearch }) {

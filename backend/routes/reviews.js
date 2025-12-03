@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllReviews, getCountReviews, getAverageRating
+  getAllReviews,
+  getCountReviews,
+  getAverageRating,
+  getTopBathrooms,
+  searchBathrooms,
 } = require("../controllers/reviewsController");
-
 
 // Get count of reviews
 router.get("/count", (req, res) => {
@@ -22,5 +25,17 @@ router.get("/all", (req, res) => {
     getAllReviews(req, res); // call your controller
   }
 );
+
+// GET /api/reviews/top?limit=5
+router.get("/top", (req, res) => {
+  console.log("GET /api/reviews/top called");
+  getTopBathrooms(req, res);
+});
+
+// GET /api/reviews/search?term=xxx
+router.get("/search", (req, res) => {
+  console.log("GET /api/reviews/search called");
+  searchBathrooms(req, res);
+});
 
 module.exports = router;
