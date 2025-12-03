@@ -105,9 +105,7 @@ export default function TopRatedBathrooms() {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch(
-        `${API_BASE_URL}/bathrooms/top?limit=5`
-      );
+      const res = await fetch(`${API_BASE_URL}/top?limit=5`);
       if (!res.ok) {
         throw new Error("Failed to fetch top bathrooms");
       }
@@ -134,7 +132,7 @@ export default function TopRatedBathrooms() {
       setSearchTerm(term);
 
       const res = await fetch(
-        `${API_BASE_URL}/bathrooms?search=${encodeURIComponent(term)}`
+        `${API_BASE_URL}?search=${encodeURIComponent(term)}`
       );
       if (!res.ok) {
         throw new Error("Failed to search bathrooms");
