@@ -1,16 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
-export default function TopRatedBathrooms() {
-    const navigate = useNavigate();
-    return (
-      <div className="">
-        <h1>Top Rated Bathrooms Page</h1>
-        <button onClick={() => navigate('/')}>home</button>
-      </div>
-    );
-  }
-
-  import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL = "http://localhost:5001"; 
