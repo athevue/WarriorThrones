@@ -32,9 +32,9 @@ router.get("/top", (req, res) => {
   getTopBathrooms(req, res);
 });
 
-// GET /api/reviews/search?term=xxx
-router.get("/search", (req, res) => {
-  console.log("GET /api/reviews/search called");
+// GET /api/reviews?search=term
+router.get("/", (req, res) => {
+  console.log("GET /api/reviews?search called");
   searchBathrooms(req, res);
 });
 

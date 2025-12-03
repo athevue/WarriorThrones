@@ -48,8 +48,74 @@ async function getAllReviews(req, res) {
   }
 }
 
+// TOP RATED BATHROOMS
+async function getTopBathrooms(req, res) {
+  try {
+    const limit = Number(req.query.limit) || 5;
+
+    const { data, error } = await supabase
+      .from("BathroomRating")
+      .select("*")
+      .order("overallRating", { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+
+    // Shape data to what the frontend expects
+    const bathrooms = data.map((row) => ({
+      id: row.id,
+      name: `${row.building} Bathroom`,
+      building: row.building,
+      averageRating: row.overallRating,
+      amenities: [], // none yet, but frontend expects this field
+    }));
+
+    res.json(bathrooms);
+  } catch (err) {
+    console.error("getTopBathrooms error:", err);
+    res.status(500).json({ message: "Failed to load top bathrooms" });
+  }
+}
+
+// SEARCH BATHROOMS
+async function searchBathrooms(req, res) {
+  try {
+    const term = (req.query.search || "").trim();
+
+    if (!term) {
+      // If no search term, just return top bathrooms
+      return getTopBathrooms(req, res);
+    }
+
+    const { data, error } = await supabase
+      .from("BathroomRating")
+      .select("*")
+      .or(
+        `building.ilike.%${term}%,comment.ilike.%${term}%`
+      )
+      .order("overallRating", { ascending: false });
+
+    if (error) throw error;
+
+    const bathrooms = data.map((row) => ({
+      id: row.id,
+      name: `${row.building} Bathroom`,
+      building: row.building,
+      averageRating: row.overallRating,
+      amenities: [],
+    }));
+
+    res.json(bathrooms);
+  } catch (err) {
+    console.error("searchBathrooms error:", err);
+    res.status(500).json({ message: "Failed to search bathrooms" });
+  }
+}
+
 module.exports = {
     getCountReviews,
     getAverageRating,
-    getAllReviews
+    getAllReviews,
+    getTopBathrooms, 
+    searchBathrooms,   
 };
