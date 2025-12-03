@@ -60,14 +60,12 @@ async function getTopBathrooms(req, res) {
       .limit(limit);
 
     if (error) throw error;
-
-    // Shape data to what the frontend expects
     const bathrooms = data.map((row) => ({
       id: row.id,
       name: `${row.building} Bathroom`,
       building: row.building,
       averageRating: row.overallRating,
-      amenities: [], // none yet, but frontend expects this field
+      amenities: [], 
     }));
 
     res.json(bathrooms);
@@ -83,7 +81,6 @@ async function searchBathrooms(req, res) {
     const term = (req.query.search || "").trim();
 
     if (!term) {
-      // If no search term, just return top bathrooms
       return getTopBathrooms(req, res);
     }
 

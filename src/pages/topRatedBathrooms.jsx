@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL = "http://localhost:5001/api/reviews";
 
-// --- SearchBar ---
+// search
 function SearchBar({ initialValue = "", onSearch }) {
   const [value, setValue] = useState(initialValue);
 
@@ -34,7 +34,7 @@ function SearchBar({ initialValue = "", onSearch }) {
   );
 }
 
-// --- BathroomCard ---
+//bathroom card
 function BathroomCard({ bathroom, onClick }) {
   return (
     <button
@@ -69,7 +69,7 @@ function BathroomCard({ bathroom, onClick }) {
   );
 }
 
-// --- BathroomList ---
+//bathroom list 
 function BathroomList({ bathrooms, onSelect }) {
   if (!bathrooms || bathrooms.length === 0) {
     return (
@@ -93,7 +93,6 @@ function BathroomList({ bathrooms, onSelect }) {
   );
 }
 
-// --- Page component ---
 export default function TopRatedBathrooms() {
   const navigate = useNavigate();
   const [bathrooms, setBathrooms] = useState([]);
@@ -119,7 +118,6 @@ export default function TopRatedBathrooms() {
   }
 
   async function fetchBathroomsBySearch(term) {
-    // empty search → load top 5 again
     if (!term) {
       setSearchTerm("");
       fetchTopBathrooms();
@@ -139,7 +137,6 @@ export default function TopRatedBathrooms() {
       }
       const data = await res.json();
 
-      // safety: still only show top 5 if API returns more
       setBathrooms(data.slice(0, 5));
     } catch (err) {
       setError(err.message ?? "Something went wrong");
@@ -148,13 +145,12 @@ export default function TopRatedBathrooms() {
     }
   }
 
-  // initial load → top 5
   useEffect(() => {
     fetchTopBathrooms();
   }, []);
 
+  // need to update this when we have a details page 
   function handleSelectBathroom(bathroom) {
-    // TODO: change this route when you have a details page
     navigate(`/bathrooms/${bathroom.id}`);
   }
 
