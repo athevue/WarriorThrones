@@ -1,0 +1,78 @@
+/* Container for all cards */
+.browse-card-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .browse-card-title {
+    margin-bottom: 20px;
+    color: #0C584F;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Stack cards vertically */
+  .cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* spacing between cards */
+  }
+  
+  /* Individual review card */
+  .review-card {
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+  }
+  
+  /* Left highlight strip */
+  .review-card::before {
+    content: '';
+    width: 8px;
+    background-color: #0C584F;
+    display: block;
+  }
+  
+  /* Content inside the card */
+  .review-card > div {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  /* Card hover effect */
+  .review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Card headings and text */
+  .review-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    color: #0C584F;
+  }
+  
+  .review-card p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .review-card {
+      flex-direction: column;
+    }
+  
+    .review-card::before {
+      width: 100%; /* top strip instead of side */
+      height: 6px;
+    }
+  }
+  

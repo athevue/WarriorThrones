@@ -56,14 +56,14 @@ export default function Header() {
         <div className="stats-card">
           <h2 className="stats-title">Average Rating</h2>
           <p className="stats-value">
-            {averageRating !== null ? averageRating : "Loading..."} 
+            {averageRating ? averageRating : "--"} 
           </p>
         </div>
         
         <div className="stats-card">
           <h2 className="stats-title">Total Reviews</h2>
           <p className="stats-value">
-            {totalReviews !== null ? totalReviews : "Loading..."}
+            {totalReviews ? totalReviews : "--"}
           </p>
         </div>
       </div>
