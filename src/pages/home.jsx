@@ -6,7 +6,7 @@ import RecentActivity from "../components/homeComp/recentActivity";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="home">
       <Header />
       <Quick />
       <TopRated />

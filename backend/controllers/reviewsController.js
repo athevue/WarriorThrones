@@ -4,8 +4,8 @@ const supabase = require("../utils/supabaseClient");
 async function getCountReviews(req, res) {
     try {
         const { count, error } = await supabase
-            .from("BathroomRating")
-            .select("id", { count: "exact", head: true });
+            .from("BathroomRatings")
+            .select("*", { count: "exact", head: true });
 
         if (error) throw error;
 
@@ -20,12 +20,12 @@ async function getCountReviews(req, res) {
 async function getAverageRating(req, res) {
   try {
     const { data, error } = await supabase
-      .from("BathroomRating")
-      .select("overallRating", { count: "exact" });
+      .from("BathroomRatings")
+      .select("OverallRating", { count: "exact" });
 
     if (error) throw error;
 
-    const totalRatings = data.reduce((sum, review) => sum + review.overallRating, 0);
+    const totalRatings = data.reduce((sum, review) => sum + review.OverallRating, 0);
     const averageRating = data.length ? totalRatings / data.length : 0;
 
     res.json({ averageRating });
@@ -38,7 +38,7 @@ async function getAverageRating(req, res) {
 // NEW: Fetch all reviews
 async function getAllReviews(req, res) {
   try {
-    const { data, error } = await supabase.from("BathroomRating").select("*");
+    const { data, error } = await supabase.from("BathroomRatings").select("*");
     if (error) throw error;
 
     res.json(data); // return all reviews as JSON
@@ -54,17 +54,17 @@ async function getTopBathrooms(req, res) {
     const limit = Number(req.query.limit) || 5;
 
     const { data, error } = await supabase
-      .from("BathroomRating")
+      .from("BathroomRatings")
       .select("*")
-      .order("overallRating", { ascending: false })
+      .order("OverallRating", { ascending: false })
       .limit(limit);
 
     if (error) throw error;
     const bathrooms = data.map((row) => ({
       id: row.id,
-      name: `${row.building} Bathroom`,
-      building: row.building,
-      averageRating: row.overallRating,
+      name: `${row.building_name} Bathroom`,
+      building: row.building_name, // unsure of this field name
+      averageRating: row.OverallRating,
       amenities: [], 
     }));
 
@@ -85,12 +85,12 @@ async function searchBathrooms(req, res) {
     }
 
     const { data, error } = await supabase
-      .from("BathroomRating")
+      .from("BathroomRatings")
       .select("*")
       .or(
         `building.ilike.%${term}%,comment.ilike.%${term}%`
       )
-      .order("overallRating", { ascending: false });
+      .order("OverallRating", { ascending: false });
 
     if (error) throw error;
 
