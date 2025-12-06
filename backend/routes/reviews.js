@@ -19,7 +19,7 @@ router.get("/average", (req, res) => {
     getAverageRating(req, res); 
 });
 
-// NEW route to get all reviews
+// route to get all reviews
 router.get("/all", (req, res) => {
     console.log("GET /api/reviews/all called"); // <-- put it here
     getAllReviews(req, res); // call your controller
