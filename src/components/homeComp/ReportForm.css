@@ -1,0 +1,77 @@
+.report-form-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.report-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.report-form label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.report-form input[type="text"],
+.report-form textarea,
+.report-form select,
+.report-form input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 4px;
+  border: 1px solid #aaa;
+  box-sizing: border-box;
+}
+
+.report-form textarea {
+  resize: vertical;
+}
+
+.report-form input[type="checkbox"] {
+  margin-left: 8px;
+}
+
+.report-form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #0077cc;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.report-form button:hover {
+  background-color: #005fa3;
+}
+
+/* Submitted reports preview */
+.submitted-reports {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.submitted-reports ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.submitted-reports li {
+  margin-bottom: 15px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
