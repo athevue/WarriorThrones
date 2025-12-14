@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Header.css";
+import { useNavigate } from "react-router-dom";
 
 // Hiding internal data and controlling how that data is being accessed
 // This code shows encapsulation because total reviews is private to the component
@@ -9,6 +10,7 @@ export default function Header() {
   const [showForm, setShowForm] = useState(false);
   const [totalReviews, setTotalReviews] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
+  const navigate = useNavigate(); // navigate function for routing
 
   useEffect(() => {
 
@@ -47,7 +49,7 @@ export default function Header() {
         </div>
 
         <button className="header-button" onClick={() => setShowForm(true)}>
-          <span className="button-icon">+</span> Add Bathroom
+          Login
         </button>
       </div>
 
@@ -72,15 +74,15 @@ export default function Header() {
       {showForm && (
         <div className="modal-overlay" onClick={() => setShowForm(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-xl">Add Bathroom</h2>
+            <h2 className="text-xl">Login/Signup</h2>
             <form>
               <label className="inputTextName">
-                Name:
+                Username:
                 <input type="text" className="inputText" />
               </label>
               <br />
               <label className="inputTextName">
-                Location:
+                Password:
                 <input type="text" className="inputText" />
               </label>
 
@@ -92,10 +94,21 @@ export default function Header() {
                   Cancel
                 </button>
 
+                <p>
+                  Don&apos;t have an account?{" "}
+                  <button
+                    type="button"
+                    className="link-button"
+                    onClick={() => navigate("/login")}
+                  >
+                    Sign up here
+                  </button>
+                </p>
+
                 <button
                   type="submit"
                 >
-                  Save
+                  Login
                 </button>
               </div>
             </form>
