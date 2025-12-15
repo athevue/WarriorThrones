@@ -3,6 +3,20 @@ import "./recentActivity.css";
 
 const API_URL = "http://localhost:5001/api/reviews/recent";
 
+function timeAgo(dateString) {
+  const now = new Date();
+  const past = new Date(dateString);
+  const seconds = Math.floor((now - past) / 1000);
+
+  if (seconds < 60) return "Just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} day${days !== 1 ? "s" : ""} ago`;
+}
+
 export default function RecentActivity() {
   const [activity, setActivity] = useState([]);
   const [error, setError] = useState("");
@@ -31,10 +45,10 @@ export default function RecentActivity() {
       {activity.map((item, index) => (
         <div key={index} className="activity-card">
           <div className="activity-left">
-            <div className="activity-text">
-              <strong>{item.building}</strong>
+            <strong>{item.building}</strong>
+            <div className="activity-time">
+              {timeAgo(item.createdAt)}
             </div>
-            <div className="activity-time">Just now</div>
           </div>
 
           <div className="activity-rating">
