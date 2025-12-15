@@ -13,18 +13,37 @@ function SearchBar({ initialValue = "", onSearch }) {
     onSearch(value.trim());
   }
 
+  function handleClear() {
+    setValue("");
+    onSearch(""); // will reload top 5
+  }
+
   return (
     <form onSubmit={handleSubmit} className="trb-search-form">
-      <input
-        type="text"
-        placeholder="Search by building or bathroom name..."
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        className="trb-search-input"
-      />
-      <button type="submit" className="trb-search-button">
-        Search
-      </button>
+      <div className="trb-search-wrap">
+        <input
+          type="text"
+          placeholder="Search by building or bathroom name..."
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className="trb-search-input"
+        />
+
+        {value && (
+          <button
+            type="button"
+            className="trb-search-clear"
+            onClick={handleClear}
+            aria-label="Clear search"
+          >
+            ✕
+          </button>
+        )}
+
+        <button type="submit" className="trb-search-button">
+          Search
+        </button>
+      </div>
     </form>
   );
 }
