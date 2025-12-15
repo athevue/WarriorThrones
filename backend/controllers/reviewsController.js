@@ -88,7 +88,7 @@ async function searchBathrooms(req, res) {
       .from("BathroomRatings")
       .select("*")
       .or(
-        `building.ilike.%${term}%,comment.ilike.%${term}%`
+        `building_name.ilike.%${term}%`
       )
       .order("OverallRating", { ascending: false });
 
@@ -96,8 +96,8 @@ async function searchBathrooms(req, res) {
 
     const bathrooms = data.map((row) => ({
       id: row.id,
-      name: `${row.building} Bathroom`,
-      building: row.building,
+      name: `${row.building_name} Bathroom`,
+      building: row.building_name,
       averageRating: row.overallRating,
       amenities: [],
     }));
