@@ -1,0 +1,63 @@
+.trb-page {
+  min-height: 100vh;
+  background: #f3f4f6;
+  padding: 24px;
+}
+
+.trb-header {
+  max-width: 800px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trb-title {
+  font-size: 20px;
+  margin: 0;
+}
+
+.trb-homeButton {
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.trb-searchForm {
+  max-width: 800px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  gap: 8px;
+}
+
+.trb-searchInput {
+  flex: 1;
+  padding: 8px;
+}
+
+.trb-searchButton {
+  padding: 8px 12px;
+}
+
+.trb-list {
+  max-width: 800px;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+}
+
+.trb-listItem {
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.trb-status {
+  text-align: center;
+}
+
+.trb-error {
+  color: red;
+  text-align: center;
+}
