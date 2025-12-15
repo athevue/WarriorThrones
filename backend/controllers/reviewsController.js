@@ -88,7 +88,7 @@ async function searchBathrooms(req, res) {
       .from("BathroomRatings")
       .select("*")
       .or(
-        `building.ilike.%${term}%,comment.ilike.%${term}%`
+        `building_name.ilike.%${term}%`
       )
       .order("OverallRating", { ascending: false });
 
@@ -96,8 +96,8 @@ async function searchBathrooms(req, res) {
 
     const bathrooms = data.map((row) => ({
       id: row.id,
-      name: `${row.building} Bathroom`,
-      building: row.building,
+      name: `${row.building_name} Bathroom`,
+      building: row.building_name,
       averageRating: row.overallRating,
       amenities: [],
     }));
@@ -109,10 +109,66 @@ async function searchBathrooms(req, res) {
   }
 }
 
+// RANDOM BATHROOM (Bathroom of the Week)
+async function getRandomBathroom(req, res) {
+  try {
+    const { data, error } = await supabase
+      .from("BathroomRatings")
+      .select("*");
+
+    if (error) throw error;
+    if (!data || data.length === 0) {
+      return res.status(404).json({ message: "No bathrooms found" });
+    }
+
+    const randomIndex = Math.floor(Math.random() * data.length);
+    const row = data[randomIndex];
+
+    const bathroom = {
+      id: row.id,
+      name: `${row.building_name} Bathroom`,
+      building: row.building_name,
+      averageRating: row.OverallRating ?? 0,
+      amenities: [],
+    };
+
+    res.json(bathroom);
+  } catch (err) {
+    console.error("getRandomBathroom error:", err);
+    res.status(500).json({ message: "Failed to fetch random bathroom" });
+  }
+}
+
+// RECENT ACTIVITY 
+async function getRecentActivity(req, res) {
+  try {
+    const { data, error } = await supabase
+      .from("BathroomRatings")
+      .select("building_name, OverallRating, created_at")
+      .order("created_at", { ascending: false })
+      .limit(3);
+
+    if (error) throw error;
+
+    const activity = data.map((row) => ({
+      building: row.building_name,
+      rating: row.OverallRating,
+      createdAt: row.created_at,
+    }));
+
+    res.json(activity);
+  } catch (err) {
+    console.error("getRecentActivity error:", err);
+    res.status(500).json({ message: "Failed to load recent activity" });
+  }
+}
+
 module.exports = {
     getCountReviews,
     getAverageRating,
     getAllReviews,
     getTopBathrooms, 
     searchBathrooms,   
+    getRandomBathroom,
+    getRecentActivity,
 };
