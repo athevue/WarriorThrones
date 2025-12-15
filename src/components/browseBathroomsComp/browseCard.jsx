@@ -1,56 +1,168 @@
 import { useState, useEffect } from "react";
 import "./browseCard.css";
 
-export default function BrowseCard() {
-    const [allReviews, setAllReviews] = useState([]);
+export default function BrowseCard({ setBathroomCount }) {
+  const [allReviews, setAllReviews] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-    useEffect (() => {
+  // Filter states
+  const [showFilters, setShowFilters] = useState(false);
+  const [genderFilter, setGenderFilter] = useState("all");
+  const [buildingFilter, setBuildingFilter] = useState("all");
+  const [accessibleOnly, setAccessibleOnly] = useState(false);
 
-        // fetch total reviews
-        async function fetchAllReviews() {
-            try {
-              const res = await fetch("http://127.0.0.1:5001/api/reviews/all");
-              const data = await res.json();
+  // Fetch reviews once
+  useEffect(() => {
+    async function fetchAllReviews() {
+      try {
+        const res = await fetch("http://127.0.0.1:5001/api/reviews/all");
+        const data = await res.json();
 
+        const mappedData = data.map((r) => ({
+          building_name: r.building_name,
+          gender_type: r.gender_type,
+          location_room: r.location_room,
+          accessible: r.accessible || false,
+          overall_rating: r.OverallRating,
+        }));
 
-              // Extract only the fields you want
-            const mappedData = data.map(review => ({
-                building_name: review.building_name,
-                gender_type: review.gender_type,
-                location_room: review.location_room,
-                overall_rating: review.OverallRating
-            }));
+        setAllReviews(mappedData);
+      } catch (err) {
+        console.error("Error fetching all reviews:", err);
+      }
+    }
 
-              setAllReviews(mappedData);
+    fetchAllReviews();
+  }, []);
 
-            } catch (err) {
-              console.error("Error fetching all reviews:", err);
-            }
-          }
-          fetchAllReviews();
-        }, []); // empty dependency array to run once on mount
-        console.log("All Reviews Data:", allReviews
-    );
+  // Filter reviews based on search + dropdown filters
+  const filteredReviews = allReviews.filter((review) => {
+    const q = searchTerm.toLowerCase();
 
-    return (
-        <div className="browse-card-container">
-      <h2 className="browse-card-title">All Reviews</h2>
-      
-      {allReviews.length === 0 ? (
-        <p>Loading...</p>
+    const matchesSearch =
+      review.building_name?.toLowerCase().includes(q) ||
+      review.gender_type?.toLowerCase().includes(q) ||
+      review.location_room?.toLowerCase().includes(q);
+
+    const matchesGender =
+      genderFilter === "all" || review.gender_type === genderFilter;
+
+    const matchesBuilding =
+      buildingFilter === "all" || review.building_name === buildingFilter;
+
+    const matchesAccessible = !accessibleOnly || review.accessible;
+
+    return matchesSearch && matchesGender && matchesBuilding && matchesAccessible;
+  });
+
+  // Update parent component with count
+  useEffect(() => {
+    setBathroomCount(filteredReviews.length);
+  }, [filteredReviews, setBathroomCount]);
+
+  // Unique buildings for dropdown
+  const buildingOptions = ["all", ...new Set(allReviews.map((r) => r.building_name))];
+
+  return (
+    <div className="browse-card-container">
+      {/* Search + Filter */}
+      <div className="search-filter-bar">
+        <div className="search-input-wrapper">
+          <span className="search-icon">🔍</span>
+          <input
+            type="text"
+            placeholder="Search bathrooms, buildings, rooms..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        <div className="filter-wrapper">
+          <button
+            className="filter-button"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            Filters ▼
+          </button>
+
+          {showFilters && (
+            <div className="filter-dropdown">
+              <div className="filter-group">
+                <label>Gender:</label>
+                <select
+                  value={genderFilter}
+                  onChange={(e) => setGenderFilter(e.target.value)}
+                >
+                  <option value="all">All</option>
+                  <option value="Men">Men</option>
+                  <option value="Women">Women</option>
+                </select>
+              </div>
+
+              <div className="filter-group">
+                <label>Building:</label>
+                <select
+                  value={buildingFilter}
+                  onChange={(e) => setBuildingFilter(e.target.value)}
+                >
+                  {buildingOptions.map((b, i) => (
+                    <option key={i} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="filter-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={accessibleOnly}
+                    onChange={(e) => setAccessibleOnly(e.target.checked)}
+                  />{" "}
+                  Accessible Only
+                </label>
+              </div>
+
+              <div className="filter-group">
+                  <button
+                    className="clear-filters-button"
+                    onClick={() => {
+                      setGenderFilter("all");
+                      setBuildingFilter("all");
+                      setAccessibleOnly(false);
+                    }}
+                  >
+                    Clear Filters
+                  </button>
+                </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Cards */}
+      {filteredReviews.length === 0 ? (
+        <p className="no-results">No results found</p>
       ) : (
         <div className="cards-wrapper">
-          {allReviews.map((review, index) => (
+          {filteredReviews.map((review, index) => (
             <div className="review-card" key={index}>
               <h3>{review.building_name}</h3>
-              <p><strong>Gender:</strong> {review.gender_type}</p> 
-              <p><strong>Room:</strong> {review.location_room}</p>
-              <p><strong>Overall Rating:</strong> {review.overall_rating}</p>
+              <p>
+                <strong>Gender:</strong> {review.gender_type}
+              </p>
+              <p>
+                <strong>Room:</strong> {review.location_room}
+              </p>
+              <p>
+                <strong>Overall Rating:</strong> {review.overall_rating}
+              </p>
+              {review.accessible && <p>♿ Accessible</p>}
             </div>
           ))}
         </div>
       )}
     </div>
-  
-    );
+  );
 }

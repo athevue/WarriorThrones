@@ -1,14 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import BrowseCard from "../components/browseBathroomsComp/browseCard";
+import Header from "../components/browseBathroomsComp/headerBrowse";
 
 export default function BrowseBathrooms() {
-    const navigate = useNavigate();
-    return (
-      <div className="">
-        <h1>Browse Bathrooms Page</h1>
-        <button onClick={() => navigate('/')}>Home</button>
-        <BrowseCard />
-      </div>
-    );
-  }
-  
+  const [bathroomCount, setBathroomCount] = useState(0);
+
+  return (
+    <div>
+      <Header count={bathroomCount} />
+      <BrowseCard setBathroomCount={setBathroomCount} />
+    </div>
+  );
+}
