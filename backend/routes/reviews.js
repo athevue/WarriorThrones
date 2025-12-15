@@ -6,6 +6,7 @@ const {
   getAverageRating,
   getTopBathrooms,
   searchBathrooms,
+  getRandomBathroom,
 } = require("../controllers/reviewsController");
 
 // Get count of reviews
@@ -37,5 +38,8 @@ router.get("/", (req, res) => {
   console.log("GET /api/reviews?search called");
   searchBathrooms(req, res);
 });
+
+router.get("/random", getRandomBathroom);
+
 
 module.exports = router;

@@ -109,10 +109,41 @@ async function searchBathrooms(req, res) {
   }
 }
 
+// RANDOM BATHROOM (Bathroom of the Week)
+async function getRandomBathroom(req, res) {
+  try {
+    const { data, error } = await supabase
+      .from("BathroomRatings")
+      .select("*");
+
+    if (error) throw error;
+    if (!data || data.length === 0) {
+      return res.status(404).json({ message: "No bathrooms found" });
+    }
+
+    const randomIndex = Math.floor(Math.random() * data.length);
+    const row = data[randomIndex];
+
+    const bathroom = {
+      id: row.id,
+      name: `${row.building_name} Bathroom`,
+      building: row.building_name,
+      averageRating: row.OverallRating ?? 0,
+      amenities: [],
+    };
+
+    res.json(bathroom);
+  } catch (err) {
+    console.error("getRandomBathroom error:", err);
+    res.status(500).json({ message: "Failed to fetch random bathroom" });
+  }
+}
+
 module.exports = {
     getCountReviews,
     getAverageRating,
     getAllReviews,
     getTopBathrooms, 
     searchBathrooms,   
+    getRandomBathroom,
 };

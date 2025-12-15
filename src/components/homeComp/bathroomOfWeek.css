@@ -1,0 +1,10 @@
+.bow-container {
+  max-width: 800px;
+  margin: 24px auto;
+}
+
+.bow-loading,
+.bow-error {
+  text-align: center;
+  margin-top: 12px;
+}
