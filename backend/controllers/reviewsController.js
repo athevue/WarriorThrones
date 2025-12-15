@@ -139,6 +139,32 @@ async function getRandomBathroom(req, res) {
   }
 }
 
+// RECENT ACTIVITY
+async function getRecentActivity(req, res) {
+  try {
+    const limit = Number(req.query.limit) || 3;
+
+    const { data, error } = await supabase
+      .from("BathroomRatings")
+      .select("building_name, OverallRating, created_at")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+
+    const activity = data.map((row) => ({
+      building: row.building_name,
+      rating: row.OverallRating,
+      time: row.created_at,
+    }));
+
+    res.json(activity);
+  } catch (err) {
+    console.error("getRecentActivity error:", err);
+    res.status(500).json({ message: "Failed to fetch recent activity" });
+  }
+}
+
 module.exports = {
     getCountReviews,
     getAverageRating,
@@ -146,4 +172,5 @@ module.exports = {
     getTopBathrooms, 
     searchBathrooms,   
     getRandomBathroom,
+    getRecentActivity,
 };
