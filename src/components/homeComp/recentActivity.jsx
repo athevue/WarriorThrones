@@ -38,7 +38,7 @@ export default function RecentActivity() {
 
   return (
     <div className="recent-activity">
-      <h2 className="recent-title">Recent Activity</h2>
+      <h2 className="recent-title">Recent Ratings</h2>
 
       {error && <p className="error">{error}</p>}
 
