@@ -4,6 +4,7 @@ import TopRatedBathrooms from "./pages/topRatedBathrooms";
 import AddBathroom from "./pages/addBathroom";
 import ReportBathroom from "./pages/reportBathroom";
 import Login from "./pages/login";
+import Signup from "./pages/signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
