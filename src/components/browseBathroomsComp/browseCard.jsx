@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./browseCard.css";
 
 export default function BrowseCard({ setBathroomCount }) {
   const [allReviews, setAllReviews] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter states
   const [showFilters, setShowFilters] = useState(false);
   const [genderFilter, setGenderFilter] = useState("all");
   const [buildingFilter, setBuildingFilter] = useState("all");
   const [accessibleOnly, setAccessibleOnly] = useState(false);
 
-  // Fetch reviews once
   useEffect(() => {
     async function fetchAllReviews() {
       try {
@@ -35,7 +34,6 @@ export default function BrowseCard({ setBathroomCount }) {
     fetchAllReviews();
   }, []);
 
-  // Filter reviews based on search + dropdown filters
   const filteredReviews = allReviews.filter((review) => {
     const q = searchTerm.toLowerCase();
 
@@ -55,12 +53,10 @@ export default function BrowseCard({ setBathroomCount }) {
     return matchesSearch && matchesGender && matchesBuilding && matchesAccessible;
   });
 
-  // Update parent component with count
   useEffect(() => {
     setBathroomCount(filteredReviews.length);
   }, [filteredReviews, setBathroomCount]);
 
-  // Unique buildings for dropdown
   const buildingOptions = ["all", ...new Set(allReviews.map((r) => r.building_name))];
 
   return (
@@ -125,17 +121,17 @@ export default function BrowseCard({ setBathroomCount }) {
               </div>
 
               <div className="filter-group">
-                  <button
-                    className="clear-filters-button"
-                    onClick={() => {
-                      setGenderFilter("all");
-                      setBuildingFilter("all");
-                      setAccessibleOnly(false);
-                    }}
-                  >
-                    Clear Filters
-                  </button>
-                </div>
+                <button
+                  className="clear-filters-button"
+                  onClick={() => {
+                    setGenderFilter("all");
+                    setBuildingFilter("all");
+                    setAccessibleOnly(false);
+                  }}
+                >
+                  Clear Filters
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -147,19 +143,19 @@ export default function BrowseCard({ setBathroomCount }) {
       ) : (
         <div className="cards-wrapper">
           {filteredReviews.map((review, index) => (
-            <div className="review-card" key={index}>
-              <h3>{review.building_name}</h3>
-              <p>
-                <strong>Gender:</strong> {review.gender_type}
-              </p>
-              <p>
-                <strong>Room:</strong> {review.location_room}
-              </p>
-              <p>
-                <strong>Overall Rating:</strong> {review.overall_rating}
-              </p>
-              {review.accessible && <p>♿ Accessible</p>}
-            </div>
+            <Link // using Link for client-side routing
+              to={`/reviewDetail/${encodeURIComponent(review.building_name)}`}
+              key={index}
+              className="review-card-link"
+            >
+              <div className="review-card">
+                <h3>{review.building_name}</h3>
+                <p><strong>Gender:</strong> {review.gender_type}</p>
+                <p><strong>Room:</strong> {review.location_room}</p>
+                <p><strong>Overall Rating:</strong> {review.overall_rating}</p>
+                {review.accessible && <p>♿ Accessible</p>}
+              </div>
+            </Link>
           ))}
         </div>
       )}

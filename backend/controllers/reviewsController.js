@@ -163,6 +163,28 @@ async function getRecentActivity(req, res) {
   }
 }
 
+// Get review by ID (Supabase)
+async function getReview(req, res) {
+  try {
+    const { id } = req.params;
+
+    const { data, error } = await supabase
+      .from("BathroomRatings")
+      .select("*")
+      .eq("building_name", id)
+      .single(); // makes sure of one row
+
+    if (error) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+
+    res.json(data);
+  } catch (err) {
+    console.error("getReview error:", err);
+    res.status(500).json({ message: "Failed to fetch review" });
+  }
+}
+
 module.exports = {
     getCountReviews,
     getAverageRating,
@@ -171,4 +193,5 @@ module.exports = {
     searchBathrooms,   
     getRandomBathroom,
     getRecentActivity,
+    getReview,
 };

@@ -4,6 +4,7 @@ import TopRatedBathrooms from "./pages/topRatedBathrooms";
 import AddBathroom from "./pages/addBathroom";
 import ReportBathroom from "./pages/reportBathroom";
 import Login from "./pages/login";
+import ReviewDetail from "./pages/reviewDetail";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,9 @@ function App() {
           <Route path="/addBathroom" element={<AddBathroom />} />
           <Route path="/reportBathroom" element={<ReportBathroom />} />
           <Route path="/login" element={<Login />} />
+
+          {/* Individual review page for each review that is clicked on */}
+          <Route path="/reviewDetail/:id" element={<ReviewDetail />} />
         </Routes>
       </div>
     </Router>
