@@ -22,7 +22,7 @@ export default function ReviewCard({ review, loading }) {
   };
 
   return (
-    <div className="review-card">
+    <div className="review-card2">
       {/* Rating + Stars */}
       <div className="review-card-header">
         <div className="rating-section">

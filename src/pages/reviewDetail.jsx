@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/reviewDetailComp/headerReviewDetail";
 import ReviewCard from "../components/reviewDetailComp/reviewCard";
+import DetailedRating from "../components/reviewDetailComp/detailedRating";
+
 
 
 export default function ReviewDetail() {
@@ -41,35 +43,8 @@ export default function ReviewDetail() {
       />
 
     <ReviewCard review={review} loading={loading} />
+    <DetailedRating review={review} loading={loading} />
 
-
-      {/* <ReviewCard
-        review={review.OverallRating}
-        onAddReview={() => navigate(`/addBathroom`)}
-      /> */}
-
-
-      {error && <p>{error}</p>}
-
-      <div className="review-detail-content">
-        {loading ? (
-          <>
-            <p className="skeleton" />
-            <p className="skeleton" />
-            <p className="skeleton" />
-            <p className="skeleton" />
-          </>
-        ) : (
-          <>
-            <p><strong>Gender:</strong> {review.gender_type}</p>
-            <p><strong>Room:</strong> {review.location_room}</p>
-            <p><strong>Overall Rating:</strong> {review.OverallRating ?? "N/A"}</p>
-            <p><strong>Cleanliness:</strong> {review.cleanliness_1_10 ?? "N/A"}</p>
-            <p><strong>Privacy:</strong> {review.privacy_1_5 ?? "N/A"}</p>
-            <p><strong>Odor:</strong> {review.odor_1_10 ?? "N/A"}</p>
-          </>
-        )}
-      </div>
     </div>
   );
 }

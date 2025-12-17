@@ -1,13 +1,13 @@
-.review-card {
+.review-card2 {
     background: #ffffff;
+    border: .5px solid #d1d5db; /* light grey border */
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 20px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-    max-width: 90%;
+    max-width: 85%;
     margin-left: auto;
     margin-right: auto;
-    border-left: none;
   }
   
   .review-card-header {
