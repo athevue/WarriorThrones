@@ -41,6 +41,7 @@ export default function ReviewCard({ review, loading }) {
             ))}
           </div>
           <div className="rating-label">Overall Rating</div>
+          <div>Number of stalls: {review?.num_of_stalls}</div>
         </div>
 
         {/* Write Review Button */}

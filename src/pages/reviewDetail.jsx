@@ -14,6 +14,7 @@ export default function ReviewDetail() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     async function fetchReview() {
       try {
         const res = await fetch(
