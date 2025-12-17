@@ -45,17 +45,22 @@
     color: #D1FAE5;
   }
 
-.add-bathroom-button {
+  .add-bathroom-button {
     margin-left: auto; 
     background-color: #FFC72C;
     color: #0C584F;
     border: none;
-    padding: 6px 12px;
+    height: 28px;          /* exact button height */
+    line-height: 28px;     /* vertically center text */
+    font-size: 20px;       /* adjust if needed to match screenshot */
     font-weight: 600;
     border-radius: 4px;
+    padding: 0 12px;       /* horizontal padding only */
     cursor: pointer;
     transition: background 0.2s;
-  }
+}
+
+
   
   .add-bathroom-button:hover {
     background-color: #FFD449;

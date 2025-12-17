@@ -1,27 +1,30 @@
 import { useNavigate } from "react-router-dom";
-import "./headerBrowse.css";
+import "./headerReviewDetail.css";
+import { IoLocationOutline } from "react-icons/io5";
 
-export default function BrowseHeader({ count }) {
+
+export default function BrowseHeader( {buildingName, room} ) {
   const navigate = useNavigate();
 
   return (
     <header className="browse-header">
       <button
         className="back-button"
-        onClick={() => navigate("/")}>
+        onClick={() => navigate(-1)}>
         ←
       </button>
 
+
       <div className="header-text">
-        <h1>Browse Bathrooms</h1>
-        <p>{count} bathrooms found</p>
+        <h1>{buildingName} - {room}</h1>
+        <p> <IoLocationOutline /> {buildingName}</p>
       </div>
 
-      <button 
+      {/* <button 
         className="add-bathroom-button"
         onClick={() => navigate("/addBathroom")}>
         + Add
-      </button>
+      </button> */}
     </header>
   );
 }

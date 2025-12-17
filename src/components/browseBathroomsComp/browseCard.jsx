@@ -161,8 +161,8 @@ export default function BrowseCard({ setBathroomCount }) {
               <div className="review-card">
                 <h3>{review.building_name}</h3>
                 <p></p>
-                <p><strong>Gender:</strong> {review.gender_type}</p>
                 <p><strong>Room:</strong> {review.location_room}</p>
+                <p><strong>Gender:</strong> {review.gender_type}</p>
                 <p><strong>Overall Rating:</strong> {review.overall_rating}</p>
                 {review.accessible && <p>♿ Accessible</p>}
               </div>
