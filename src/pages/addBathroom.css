@@ -37,7 +37,8 @@
     margin:0;
     font-size:44px;
     line-height:1;
-    color:var(--gold)
+    color:var(--gold);
+    text-align:left;
   }
   .ab-heroSubtitle{
     margin:10px 0 0;

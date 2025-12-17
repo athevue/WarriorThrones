@@ -8,7 +8,7 @@ export default function BrowseCard({ setBathroomCount }) {
 
   const [showFilters, setShowFilters] = useState(false);
   const [genderFilter, setGenderFilter] = useState("all");
-  const [buildingFilter, setBuildingFilter] = useState("all");
+  const [buildingFilter, setBuildingFilter] = useState("All"); // start with capital "All"
   const [accessibleOnly, setAccessibleOnly] = useState(false);
 
   useEffect(() => {
@@ -18,6 +18,7 @@ export default function BrowseCard({ setBathroomCount }) {
         const data = await res.json();
 
         const mappedData = data.map((r) => ({
+          id: r.id,
           building_name: r.building_name,
           gender_type: r.gender_type,
           location_room: r.location_room,
@@ -34,6 +35,7 @@ export default function BrowseCard({ setBathroomCount }) {
     fetchAllReviews();
   }, []);
 
+  // Filter reviews based on search + filters
   const filteredReviews = allReviews.filter((review) => {
     const q = searchTerm.toLowerCase();
 
@@ -46,18 +48,20 @@ export default function BrowseCard({ setBathroomCount }) {
       genderFilter === "all" || review.gender_type === genderFilter;
 
     const matchesBuilding =
-      buildingFilter === "all" || review.building_name === buildingFilter;
+      buildingFilter === "All" || review.building_name === buildingFilter;
 
     const matchesAccessible = !accessibleOnly || review.accessible;
 
     return matchesSearch && matchesGender && matchesBuilding && matchesAccessible;
   });
 
+  // Update bathroom count for parent component
   useEffect(() => {
     setBathroomCount(filteredReviews.length);
   }, [filteredReviews, setBathroomCount]);
 
-  const buildingOptions = ["all", ...new Set(allReviews.map((r) => r.building_name))];
+  // Build building options, only one "All" at the top
+  const buildingOptions = ["All", ...Array.from(new Set(allReviews.map((r) => r.building_name)))];
 
   return (
     <div className="browse-card-container">
@@ -83,20 +87,10 @@ export default function BrowseCard({ setBathroomCount }) {
 
           {showFilters && (
             <div className="filter-dropdown">
-              <div className="filter-group">
-                <label>Gender:</label>
-                <select
-                  value={genderFilter}
-                  onChange={(e) => setGenderFilter(e.target.value)}
-                >
-                  <option value="all">All</option>
-                  <option value="Men">Men</option>
-                  <option value="Women">Women</option>
-                </select>
-              </div>
 
+              {/* Building filter */}
               <div className="filter-group">
-                <label>Building:</label>
+                <label>Building Name:</label>
                 <select
                   value={buildingFilter}
                   onChange={(e) => setBuildingFilter(e.target.value)}
@@ -109,6 +103,20 @@ export default function BrowseCard({ setBathroomCount }) {
                 </select>
               </div>
 
+              {/* Gender filter */}
+              <div className="filter-group">
+                <label>Gender:</label>
+                <select
+                  value={genderFilter}
+                  onChange={(e) => setGenderFilter(e.target.value)}
+                >
+                  <option value="all">All</option>
+                  <option value="Men">Men</option>
+                  <option value="Women">Women</option>
+                </select>
+              </div>
+
+              {/* Accessible only checkbox */}
               <div className="filter-group">
                 <label>
                   <input
@@ -120,18 +128,20 @@ export default function BrowseCard({ setBathroomCount }) {
                 </label>
               </div>
 
+              {/* Clear filters button */}
               <div className="filter-group">
                 <button
                   className="clear-filters-button"
                   onClick={() => {
                     setGenderFilter("all");
-                    setBuildingFilter("all");
+                    setBuildingFilter("All"); // reset to capital "All"
                     setAccessibleOnly(false);
                   }}
                 >
                   Clear Filters
                 </button>
               </div>
+
             </div>
           )}
         </div>
@@ -144,12 +154,13 @@ export default function BrowseCard({ setBathroomCount }) {
         <div className="cards-wrapper">
           {filteredReviews.map((review, index) => (
             <Link // using Link for client-side routing
-              to={`/reviewDetail/${encodeURIComponent(review.building_name)}`}
+              to={`/reviewDetail/${review.id}`} // always use numeric ID now
               key={index}
               className="review-card-link"
             >
               <div className="review-card">
                 <h3>{review.building_name}</h3>
+                <p></p>
                 <p><strong>Gender:</strong> {review.gender_type}</p>
                 <p><strong>Room:</strong> {review.location_room}</p>
                 <p><strong>Overall Rating:</strong> {review.overall_rating}</p>

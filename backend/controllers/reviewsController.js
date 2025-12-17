@@ -171,7 +171,7 @@ async function getReview(req, res) {
     const { data, error } = await supabase
       .from("BathroomRatings")
       .select("*")
-      .eq("building_name", id)
+      .eq("id", id) // changed id
       .single(); // makes sure of one row
 
     if (error) {
