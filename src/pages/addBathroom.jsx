@@ -136,19 +136,6 @@ export default function AddBathroom() {
   ============================== */
   return (
     <div className="ab-page">
-      {/* <header className="ab-hero">
-        <div className="ab-wrap ab-heroRow">
-          <div>
-            <h1 className="ab-heroTitle">Add Bathroom</h1>
-            <p className="ab-heroSubtitle">
-              Add a restroom and detailed ratings for Warrior Thrones.
-            </p>
-          </div>
-          <button className="ab-heroBtn" onClick={() => nav("/")}>
-            Home
-          </button>
-        </div>
-      </header> */}
 
       <Header />
 

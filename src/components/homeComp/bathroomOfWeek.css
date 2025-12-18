@@ -16,5 +16,6 @@
 
 .weekSection {
   padding: 2rem;
+  padding-bottom: 0%;
   margin: auto; /* center section */
 }

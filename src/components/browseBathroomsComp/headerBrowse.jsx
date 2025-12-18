@@ -20,7 +20,7 @@ export default function BrowseHeader({ count }) {
       <button 
         className="add-bathroom-button"
         onClick={() => navigate("/addBathroom")}>
-        + Add
+        + Add Bathroom
       </button>
     </header>
   );

@@ -1,77 +1,100 @@
+/* src/components/ReportBathroom/ReportForm.css */
+
 .report-form-container {
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
+  width: 80%;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  border: 1px solid #ddd; /* lighter grey border */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.report-form h2 {
+.report-form-container h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #333;
+}
+
+.report-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .report-form label {
-  display: block;
-  margin-bottom: 12px;
-  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #555;
+  font-size: 1rem;
 }
 
 .report-form input[type="text"],
+.report-form input[type="number"],
+.report-form input[type="file"],
 .report-form textarea,
-.report-form select,
-.report-form input[type="file"] {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  border-radius: 4px;
-  border: 1px solid #aaa;
-  box-sizing: border-box;
+.report-form select {
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+background-color: #fff;
+}
+
+.report-form input:focus,
+.report-form textarea:focus,
+.report-form select:focus {
+  outline: none;
+  border-color: #0077ff;
+  box-shadow: 0 0 5px rgba(0, 119, 255, 0.3);
 }
 
 .report-form textarea {
   resize: vertical;
+  min-height: 80px;
 }
 
-.report-form input[type="checkbox"] {
-  margin-left: 8px;
+.anon-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: #555;
 }
 
 .report-form button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  background-color: #0077cc;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
   margin-top: 10px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #FFC72C;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .report-form button:hover {
-  background-color: #005fa3;
+  background-color: #F59E0B;
 }
 
-/* Submitted reports preview */
-.submitted-reports {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #ccc;
+.report-form select option[value=""] {
+  color: #999;
 }
 
-.submitted-reports ul {
-  list-style: none;
-  padding-left: 0;
+.report-form input::placeholder,
+.report-form textarea::placeholder {
+  color: #aaa;
 }
 
-.submitted-reports li {
-  margin-bottom: 15px;
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
+@media (max-width: 640px) {
+  .report-form-container {
+    margin: 20px;
+    padding: 20px;
+  }
 }
-

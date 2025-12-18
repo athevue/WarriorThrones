@@ -1,64 +1,112 @@
 // src/components/ReportBathroom/ReportForm.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ReportForm.css";
 
 const ReportForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    location: "",
+    reporter_name: "",
+    building_name: "",
+    location_room: "",
     description: "",
     urgency: "Low",
-    picture: null,
+    floor: "",
     anonymous: false,
   });
 
-  const bathroomLocations = [
-    "Undergraduate Library - Men",
-    "Kresege Library - Women",
-    "State Hall - Men",
-    "State Hall - Women",
-    "Other",
-  ];
+  const [buildingOptions, setBuildingOptions] = useState([]);
+  const [loadingBuildings, setLoadingBuildings] = useState(true);
+
+  // Fetch building names from BathroomRatings table
+  useEffect(() => {
+    const fetchBuildings = async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:5001/api/reviews/all");
+        const data = await res.json();
+
+        // Extract unique building names
+        const buildings = Array.from(
+          new Set(data.map((r) => r.building_name).filter(Boolean))
+        );
+
+        setBuildingOptions(buildings);
+      } catch (err) {
+        console.error("Failed to fetch building names:", err);
+      } finally {
+        setLoadingBuildings(false);
+      }
+    };
+
+    fetchBuildings();
+  }, []);
 
   const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
+    const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
       setFormData((s) => ({ ...s, [name]: checked }));
-    } else if (type === "file") {
-      setFormData((s) => ({ ...s, [name]: files[0] || null }));
     } else {
       setFormData((s) => ({ ...s, [name]: value }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // For now just log; backend will consume this later via POST /reports
-    console.log("Report submitted:", formData);
 
-    // Reset form
-    setFormData({
-      name: "",
-      location: "",
-      description: "",
-      urgency: "Low",
-      picture: null,
-      anonymous: false,
-    });
+    if (!formData.building_name || !formData.description || !formData.urgency) {
+      alert("Please fill out all required fields.");
+      return;
+    }
 
-    alert("Report submitted.");
+    const payload = {
+      reporter_name: formData.anonymous ? "Anonymous" : formData.reporter_name,
+      description: formData.description,
+      urgency: formData.urgency,
+      building_name: formData.building_name,
+      location_room: formData.location_room,
+      floor: formData.floor || null,
+    };
+
+    try {
+      const res = await fetch("http://127.0.0.1:5001/api/reviews/reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Failed to submit report.");
+        return;
+      }
+
+      console.log("Report submitted:", data);
+      alert("Report submitted successfully!");
+
+      // Reset form
+      setFormData({
+        reporter_name: "",
+        building_name: "",
+        location_room: "",
+        description: "",
+        urgency: "Low",
+        floor: "",
+        anonymous: false,
+      });
+    } catch (err) {
+      console.error("Error submitting report:", err);
+      alert("Server error. Try again later.");
+    }
   };
 
   return (
     <div className="report-form-container">
-      <h2>Submit a Bathroom Issue</h2>
       <form onSubmit={handleSubmit} className="report-form">
         <label>
-          Name
+          Reporter Name *
           <input
             type="text"
-            name="name"
-            value={formData.name}
+            name="reporter_name"
+            value={formData.reporter_name}
             onChange={handleChange}
             placeholder="Your name"
             required={!formData.anonymous}
@@ -66,24 +114,47 @@ const ReportForm = () => {
         </label>
 
         <label>
-          Bathroom Location
-          <select
-            name="location"
-            value={formData.location}
+          Building Name *
+          <input
+            type="text"
+            name="building_name"
+            list="building-options"
+            value={formData.building_name}
             onChange={handleChange}
+            placeholder="Type or select building"
             required
-          >
-            <option value="">Select location</option>
-            {bathroomLocations.map((loc) => (
-              <option key={loc} value={loc}>
-                {loc}
-              </option>
+          />
+          <datalist id="building-options">
+            {buildingOptions.map((b) => (
+              <option key={b} value={b} />
             ))}
-          </select>
+          </datalist>
         </label>
 
         <label>
-          Description of Issue
+          Location/Room (Optional)
+            <input
+              type="text"
+              name="location_room"
+              value={formData.location_room}
+              onChange={handleChange}
+              placeholder="Room or specific location"
+            />
+        </label>
+
+        <label>
+          Floor (Optional)
+          <input
+            type="text"
+            name="floor"
+            value={formData.floor}
+            onChange={handleChange}
+            placeholder="Floor number"
+          />
+        </label>
+
+        <label>
+          Description of Issue *
           <textarea
             name="description"
             value={formData.description}
@@ -94,21 +165,17 @@ const ReportForm = () => {
         </label>
 
         <label>
-          Urgency Level
+          Urgency Level *
           <select
             name="urgency"
             value={formData.urgency}
             onChange={handleChange}
+            required
           >
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
           </select>
-        </label>
-
-        <label>
-          Upload Picture (optional)
-          <input type="file" name="picture" onChange={handleChange} />
         </label>
 
         <label className="anon-label">
@@ -128,4 +195,3 @@ const ReportForm = () => {
 };
 
 export default ReportForm;
-

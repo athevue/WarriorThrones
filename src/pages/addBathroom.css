@@ -99,7 +99,8 @@
   }
   .ab-field label{
     font-size:13px;
-    color:var(--muted)
+    color:var(--muted);
+    font-size: 1rem;
   }
   .ab-field input,.ab-field select,.ab-field textarea{
     width:100%;
@@ -214,8 +215,13 @@
     background:#f3f4f6
   }
   .ab-btn.primary{
-    border-color:rgba(11,93,75,.55);
-    background:var(--g);
-    color:#fff
+    border-color: #f2c94c;
+    background: #f2c94c;
+    color: black;
+  }
+
+  .ab-btn.primary:hover{
+    background: #F59E0B;
+    border-color: #F59E0B;
   }
   
