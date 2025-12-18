@@ -1,5 +1,5 @@
 import React from "react";
-import "./BathroomCard.css";
+import "./bathroomCard.css";
 
 export default function BathroomCard({ name, rating, location, numReviews }) {
     return (
