@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import BathroomCard from "../components/homeComp/bathroomCard";
 import "./topRatedBathrooms.css";
+import Header from "../components/topRatedBathroomsComp/headerTopRated";
 
 const API_BASE_URL = "http://localhost:5001/api/reviews";
 
@@ -113,8 +114,7 @@ export default function TopRatedBathrooms() {
 
   return (
     <div className="trb-page">
-      <h1>Top Rated Bathrooms</h1>
-      <button onClick={() => navigate("/")}>Home</button>
+      <Header />
 
       <div className="search-filter-bar">
         <div className="search-input-wrapper">

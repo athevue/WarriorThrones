@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./Header.css";
+import "./header.css";
 import { useNavigate } from "react-router-dom";
 
 // Hiding internal data and controlling how that data is being accessed
