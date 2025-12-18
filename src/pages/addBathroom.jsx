@@ -96,8 +96,10 @@ export default function AddBathroom() {
 
       // Calculate overall rating
       const ratingValues = Object.values(ratings); // [cleanliness, odor, ...]
-      const overall_Rating = ratingValues.reduce((a, b) => a + b, 0) / ratingValues.length;
-
+      const overall_Rating = Math.round(
+        (ratingValues.reduce((a, b) => a + b, 0) / ratingValues.length) * 100
+      ) / 100;
+      
 
       const payload = {
         ...form,

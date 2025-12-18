@@ -1,5 +1,4 @@
 .bow-container {
-  max-width: 800px;
   margin: 24px auto;
 }
 
@@ -7,4 +6,15 @@
 .bow-error {
   text-align: center;
   margin-top: 12px;
+}
+
+.weekTitle {
+  font-size: 2rem;
+    text-align: left;
+    color: black;
+}
+
+.weekSection {
+  padding: 2rem;
+  margin: auto; /* center section */
 }

@@ -1,13 +1,12 @@
 .recent-activity {
   width: 100%;
-  max-width: 900px;
   margin: 40px auto;
 }
 
 .recent-title {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 16px;
+  font-size: 2rem;
+    text-align: left;
+    color: black;
 }
 
 .activity-card {
@@ -53,4 +52,9 @@
 .error {
   color: red;
   margin-bottom: 10px;
+}
+
+.recentSection {
+  padding: 2rem;
+  margin: auto; /* center section */
 }

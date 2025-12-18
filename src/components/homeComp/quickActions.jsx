@@ -10,7 +10,7 @@ export default function Header() {
 
     return (
         <div className="quickActionsSection">
-            <h1>Quick Actions Section</h1>
+            <h2 className="quickTitle">Quick Actions Section</h2>
             <div className="buttons">
                 <button className="quick-button" onClick={() => navigate('/browseBathrooms')}>
                     <span className="button-icon"><FaSearch /></span>

@@ -33,15 +33,18 @@ export default function BathroomOfWeek() {
   }
 
   return (
-    <div className="bow-container">
-      <h1>Bathroom of the Week</h1>
+    <div className = "weekSection">
+      <h2 className="weekTitle">Bathroom of the Week</h2>
+      <div className="bow-container">
+        <BathroomCard
+          name={bathroom.name}
+          rating={bathroom.averageRating}
+          location={bathroom.building}
+          numReviews={1}
+        />
+      </div>
 
-      <BathroomCard
-        name={bathroom.name}
-        rating={bathroom.averageRating}
-        location={bathroom.building}
-        numReviews={1}
-      />
     </div>
+    
   );
 }

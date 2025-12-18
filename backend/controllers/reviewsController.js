@@ -192,10 +192,21 @@ const addBathroom = async (req, res) => {
       location_room,
       gender_type,
       num_of_stalls,
+      // Existing ratings
       cleanliness_1_10,
       odor_1_10,
       lighting_1_10,
       privacy_1_10,
+      // New ratings from RATING_FIELDS
+      traffic_1_10,
+      sink_water_pressure_1_10,
+      urinal_spacing_privacy_male_only_1_10,
+      room_temperature_hot_cold_1_10,
+      aesthetics_1_10,
+      general_noise_level_1_10,
+      ventilation_air_flow_1_10,
+      nonslip_floor_1_10,
+      // Amenities
       soap_1_0,
       paper_towel_1_or_0,
       air_dryer_1_or_0,
@@ -220,12 +231,10 @@ const addBathroom = async (req, res) => {
       OverallRating
     } = req.body;
 
-    // Require building_name and location_room
     if (!building_name?.trim() || !location_room?.trim()) {
       return res.status(400).json({ error: "Building and Location are required" });
     }
 
-    // Insert into Supabase
     const { data, error } = await supabase
       .from("BathroomRatings")
       .insert([
@@ -238,6 +247,14 @@ const addBathroom = async (req, res) => {
           odor_1_10: odor_1_10 || null,
           lighting_1_10: lighting_1_10 || null,
           privacy_1_10: privacy_1_10 || null,
+          traffic_1_10: traffic_1_10 || null,
+          sink_water_pressure_1_10: sink_water_pressure_1_10 || null,
+          urinal_spacing_privacy_male_only_1_10: urinal_spacing_privacy_male_only_1_10 || null,
+          room_temperature_hot_cold_1_10: room_temperature_hot_cold_1_10 || null,
+          aesthetics_1_10: aesthetics_1_10 || null,
+          general_noise_level_1_10: general_noise_level_1_10 || null,
+          ventilation_air_flow_1_10: ventilation_air_flow_1_10 || null,
+          nonslip_floor_1_10: nonslip_floor_1_10 || null,
           soap_1_0: soap_1_0 || 0,
           paper_towel_1_or_0: paper_towel_1_or_0 || 0,
           air_dryer_1_or_0: air_dryer_1_or_0 || 0,
@@ -262,11 +279,11 @@ const addBathroom = async (req, res) => {
           OverallRating: OverallRating || null
         }
       ])
-      .select(); // returns inserted row
+      .select();
 
     if (error) throw error;
 
-    res.status(201).json(data[0]); // send back the inserted row
+    res.status(201).json(data[0]);
   } catch (err) {
     console.error("Error adding bathroom:", err);
     res.status(500).json({ error: "Internal server error" });
