@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BathroomCard from "../components/homeComp/bathroomCard";
 import "./topRatedBathrooms.css";
 
@@ -8,13 +8,13 @@ const API_BASE_URL = "http://localhost:5001/api/reviews";
 export default function TopRatedBathrooms() {
   const navigate = useNavigate();
 
-  const [bathrooms, setBathrooms] = useState([]);       // what you display
-  const [allBathrooms, setAllBathrooms] = useState([]); // store full results for filtering
+  const [bathrooms, setBathrooms] = useState([]);     
+  const [allBathrooms, setAllBathrooms] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // --- filter state (same as first component) ---
+  // filter state 
   const [showFilters, setShowFilters] = useState(false);
   const [genderFilter, setGenderFilter] = useState("all");
   const [buildingFilter, setBuildingFilter] = useState("All");
@@ -31,7 +31,7 @@ export default function TopRatedBathrooms() {
       const data = await res.json();
 
       setAllBathrooms(data);
-      setBathrooms(data); // top 5 already
+      setBathrooms(data); 
     } catch (err) {
       setError(err.message);
     } finally {
@@ -73,39 +73,31 @@ export default function TopRatedBathrooms() {
     fetchTopBathrooms();
   }, []);
 
-  // Build building options from whatever is currently loaded (top or search results)
+  // build building options 
   const buildingOptions = useMemo(() => {
     const buildings = Array.from(
-      new Set(
-        (allBathrooms || [])
-          .map((b) => b.building)
-          .filter(Boolean)
-      )
+      new Set((allBathrooms || []).map((b) => b.building).filter(Boolean))
     );
     return ["All", ...buildings];
   }, [allBathrooms]);
 
-  // Apply filters + search, then show only top 5
+  // apply filters + search, then show only top 5
   const filteredBathrooms = useMemo(() => {
     const q = (searchTerm || "").toLowerCase();
 
     const filtered = (allBathrooms || []).filter((b) => {
-      // search like first component (building/name/room-ish)
       const matchesSearch =
-        !q ||
         (b.building || "").toLowerCase().includes(q) ||
-        (b.name || "").toLowerCase().includes(q) ||
-        (b.room || b.location_room || "").toLowerCase().includes(q);
+        (b.gender_type || "").toLowerCase().includes(q) ||
+        (b.location_room || b.room || "").toLowerCase().includes(q) ||
+        (b.name || "").toLowerCase().includes(q);
 
-      // gender filter (expects b.gender_type like your other component)
       const matchesGender =
         genderFilter === "all" || b.gender_type === genderFilter;
 
-      // building filter
       const matchesBuilding =
         buildingFilter === "All" || b.building === buildingFilter;
 
-      // accessible filter (expects boolean-ish)
       const matchesAccessible = !accessibleOnly || Boolean(b.accessible);
 
       return (
@@ -117,24 +109,13 @@ export default function TopRatedBathrooms() {
     });
 
     return filtered.slice(0, 5);
-  }, [
-    allBathrooms,
-    searchTerm,
-    genderFilter,
-    buildingFilter,
-    accessibleOnly,
-  ]);
-
-  function handleSelectBathroom(bathroom) {
-    navigate(`/bathrooms/${bathroom.id}`);
-  }
+  }, [allBathrooms, searchTerm, genderFilter, buildingFilter, accessibleOnly]);
 
   return (
     <div className="trb-page">
       <h1>Top Rated Bathrooms</h1>
       <button onClick={() => navigate("/")}>Home</button>
 
-      {/* Search + Filter bar (same structure as first component) */}
       <div className="search-filter-bar">
         <div className="search-input-wrapper">
           <span className="search-icon">🔍</span>
@@ -161,7 +142,6 @@ export default function TopRatedBathrooms() {
 
           {showFilters && (
             <div className="filter-dropdown">
-              {/* Building filter */}
               <div className="filter-group">
                 <label>Building Name:</label>
                 <select
@@ -176,7 +156,6 @@ export default function TopRatedBathrooms() {
                 </select>
               </div>
 
-              {/* Gender filter */}
               <div className="filter-group">
                 <label>Gender:</label>
                 <select
@@ -190,7 +169,6 @@ export default function TopRatedBathrooms() {
                 </select>
               </div>
 
-              {/* Accessible only checkbox */}
               <div className="filter-group">
                 <label>
                   <input
@@ -202,7 +180,6 @@ export default function TopRatedBathrooms() {
                 </label>
               </div>
 
-              {/* Clear filters */}
               <div className="filter-group">
                 <button
                   className="clear-filters-button"
@@ -227,13 +204,15 @@ export default function TopRatedBathrooms() {
       {!loading && !error && (
         <ul className="trb-list">
           {filteredBathrooms.map((b) => (
-            <li key={b.id} onClick={() => handleSelectBathroom(b)}>
-              <BathroomCard
-                name={b.name}
-                rating={b.averageRating}
-                location={b.building}
-                numReviews={1}
-              />
+            <li key={b.id}>
+              <Link to={`/reviewDetail/${b.id}`} className="review-card-link">
+                <BathroomCard
+                  name={b.name}
+                  rating={b.averageRating}
+                  location={b.building}
+                  numReviews={1}
+                />
+              </Link>
             </li>
           ))}
         </ul>
