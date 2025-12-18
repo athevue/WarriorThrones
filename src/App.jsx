@@ -4,6 +4,9 @@ import TopRatedBathrooms from "./pages/topRatedBathrooms";
 import AddBathroom from "./pages/addBathroom";
 import ReportBathroom from "./pages/reportBathroom";
 import Login from "./pages/login";
+import Signup from "./pages/signup";
+import AuthWrapper from "./components/authwrapper/authwrapper";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,10 +17,33 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/browseBathrooms" element={<BrowseBathrooms />} />
           <Route path="/topRatedBathrooms" element={<TopRatedBathrooms />} />
-          <Route path="/addBathroom" element={<AddBathroom />} />
-          <Route path="/reportBathroom" element={<ReportBathroom />} />
           <Route path="/login" element={<Login />} />
-        </Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route
+          path="/dashboard"
+          />
+            <Route
+              path="/reportBathroom"
+              element={
+                <AuthWrapper>
+                  <ReportBathroom />
+                </AuthWrapper>
+              }
+            />
+            <Route
+              path="/addBathroom"
+              element={
+                <AuthWrapper>
+                  <AddBathroom />
+                </AuthWrapper>
+              }
+            />
+          
+       
+
+        
+          
+          </Routes>
       </div>
     </Router>
   );
