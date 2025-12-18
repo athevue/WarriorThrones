@@ -1,7 +1,7 @@
 import React from "react";
 import { Star, MessageSquare } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import "./ReviewCard.css";
+import "./reviewCard.css";
 
 export default function ReviewCard({ review, loading }) {
   const navigate = useNavigate();
