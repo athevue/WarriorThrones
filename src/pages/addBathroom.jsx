@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./addBathroom.css";
+import Header from "../components/addBathroomComp/headerAddBathroom";
 
 /* ==============================
    Amenities
@@ -135,7 +136,7 @@ export default function AddBathroom() {
   ============================== */
   return (
     <div className="ab-page">
-      <header className="ab-hero">
+      {/* <header className="ab-hero">
         <div className="ab-wrap ab-heroRow">
           <div>
             <h1 className="ab-heroTitle">Add Bathroom</h1>
@@ -147,7 +148,10 @@ export default function AddBathroom() {
             Home
           </button>
         </div>
-      </header>
+      </header> */}
+
+      <Header />
+
 
       <main className="ab-main">
         <div className="ab-wrap">
