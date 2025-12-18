@@ -54,9 +54,9 @@ export default function ReviewCard({ review, loading }) {
       {/* Image Placeholder */}
       <div className="image-placeholder">Image Placeholder</div>
 
-      {/* Comments */}
+      {/* Comments: NEED TO SPLIT AVAILABLILITY AND COMMENTSSSSSS */}
       <div className="review-comments">
-        {review?.comments || "No comments yet."}
+        {review?.["Status/Comments"] || "No comments yet."}  
       </div>
     </div>
   );

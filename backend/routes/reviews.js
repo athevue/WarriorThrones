@@ -8,7 +8,8 @@ const {
   searchBathrooms,
   getRandomBathroom,
   getRecentActivity,
-  getReview
+  getReview,
+  addBathroom,
 } = require("../controllers/reviewsController");
 
 // Get count of reviews
@@ -51,5 +52,7 @@ router.get("/:id", (req, res) => {
   getReview(req, res);
 });
 
+// POST /api/reviews
+router.post("/", addBathroom);
 
 module.exports = router;

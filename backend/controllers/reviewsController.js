@@ -185,6 +185,98 @@ async function getReview(req, res) {
   }
 }
 
+const addBathroom = async (req, res) => {
+  try {
+    const {
+      building_name,
+      location_room,
+      gender_type,
+      num_of_stalls,
+      cleanliness_1_10,
+      odor_1_10,
+      lighting_1_10,
+      privacy_1_10,
+      soap_1_0,
+      paper_towel_1_or_0,
+      air_dryer_1_or_0,
+      changing_table_1_or_0,
+      touchless_tap_1_or_0,
+      disposable_seat_covers_1_or_0,
+      occupancy_indicators_1_or_0,
+      trash_can_1_or_0,
+      mirror_1_or_0,
+      automatic_door_push_button_1_or_0,
+      automatic_flushing_toilets_1_or_0,
+      motion_activated_lights_1_or_0,
+      toilet_paper_1_or_0,
+      menstrual_products_female_bathrooms_only_1_or_0,
+      ada_compliant_stall_s_with_grab_bar,
+      braille_singage_1_or_0,
+      accessible_sink_dryer_height,
+      coat_hanger,
+      shower,
+      speakers_music_1_or_0,
+      sanitization_schedule_posted,
+      OverallRating
+    } = req.body;
+
+    // Require building_name and location_room
+    if (!building_name?.trim() || !location_room?.trim()) {
+      return res.status(400).json({ error: "Building and Location are required" });
+    }
+
+    // Insert into Supabase
+    const { data, error } = await supabase
+      .from("BathroomRatings")
+      .insert([
+        {
+          building_name: building_name.trim(),
+          location_room: location_room.trim(),
+          gender_type: gender_type || null,
+          num_of_stalls: num_of_stalls || null,
+          cleanliness_1_10: cleanliness_1_10 || null,
+          odor_1_10: odor_1_10 || null,
+          lighting_1_10: lighting_1_10 || null,
+          privacy_1_10: privacy_1_10 || null,
+          soap_1_0: soap_1_0 || 0,
+          paper_towel_1_or_0: paper_towel_1_or_0 || 0,
+          air_dryer_1_or_0: air_dryer_1_or_0 || 0,
+          changing_table_1_or_0: changing_table_1_or_0 || 0,
+          touchless_tap_1_or_0: touchless_tap_1_or_0 || 0,
+          disposable_seat_covers_1_or_0: disposable_seat_covers_1_or_0 || 0,
+          occupancy_indicators_1_or_0: occupancy_indicators_1_or_0 || 0,
+          trash_can_1_or_0: trash_can_1_or_0 || 0,
+          mirror_1_or_0: mirror_1_or_0 || 0,
+          automatic_door_push_button_1_or_0: automatic_door_push_button_1_or_0 || 0,
+          automatic_flushing_toilets_1_or_0: automatic_flushing_toilets_1_or_0 || 0,
+          motion_activated_lights_1_or_0: motion_activated_lights_1_or_0 || 0,
+          toilet_paper_1_or_0: toilet_paper_1_or_0 || 0,
+          menstrual_products_female_bathrooms_only_1_or_0: menstrual_products_female_bathrooms_only_1_or_0 || 0,
+          ada_compliant_stall_s_with_grab_bar: ada_compliant_stall_s_with_grab_bar || 0,
+          braille_singage_1_or_0: braille_singage_1_or_0 || 0,
+          accessible_sink_dryer_height: accessible_sink_dryer_height || 0,
+          coat_hanger: coat_hanger || 0,
+          shower: shower || false,
+          speakers_music_1_or_0: speakers_music_1_or_0 || 0,
+          sanitization_schedule_posted: sanitization_schedule_posted || 0,
+          OverallRating: OverallRating || null
+        }
+      ])
+      .select(); // returns inserted row
+
+    if (error) throw error;
+
+    res.status(201).json(data[0]); // send back the inserted row
+  } catch (err) {
+    console.error("Error adding bathroom:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
+
+
 module.exports = {
     getCountReviews,
     getAverageRating,
@@ -194,4 +286,5 @@ module.exports = {
     getRandomBathroom,
     getRecentActivity,
     getReview,
+    addBathroom,
 };

@@ -113,6 +113,7 @@ export default function BrowseCard({ setBathroomCount }) {
                   <option value="all">All</option>
                   <option value="Men">Men</option>
                   <option value="Women">Women</option>
+                  <option value="Gender-Neutral">Gender-Neutral</option>
                 </select>
               </div>
 
