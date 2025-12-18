@@ -1,59 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BathroomCard from "../components/homeComp/bathroomCard";
 import "./topRatedBathrooms.css";
 
 const API_BASE_URL = "http://localhost:5001/api/reviews";
 
-function SearchBar({ initialValue = "", onSearch }) {
-  const [value, setValue] = useState(initialValue);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    onSearch(value.trim());
-  }
-
-  function handleClear() {
-    setValue("");
-    onSearch(""); // will reload top 5
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="trb-search-form">
-      <div className="trb-search-wrap">
-        <input
-          type="text"
-          placeholder="Search by building or bathroom name..."
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          className="trb-search-input"
-        />
-
-        {value && (
-          <button
-            type="button"
-            className="trb-search-clear"
-            onClick={handleClear}
-            aria-label="Clear search"
-          >
-            ✕
-          </button>
-        )}
-
-        <button type="submit" className="trb-search-button">
-          Search
-        </button>
-      </div>
-    </form>
-  );
-}
-
 export default function TopRatedBathrooms() {
   const navigate = useNavigate();
-  const [bathrooms, setBathrooms] = useState([]);
+
+  const [bathrooms, setBathrooms] = useState([]);       // what you display
+  const [allBathrooms, setAllBathrooms] = useState([]); // store full results for filtering
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+
+  // --- filter state (same as first component) ---
+  const [showFilters, setShowFilters] = useState(false);
+  const [genderFilter, setGenderFilter] = useState("all");
+  const [buildingFilter, setBuildingFilter] = useState("All");
+  const [accessibleOnly, setAccessibleOnly] = useState(false);
 
   async function fetchTopBathrooms() {
     try {
@@ -64,7 +29,9 @@ export default function TopRatedBathrooms() {
       if (!res.ok) throw new Error("Failed to fetch top bathrooms");
 
       const data = await res.json();
-      setBathrooms(data);
+
+      setAllBathrooms(data);
+      setBathrooms(data); // top 5 already
     } catch (err) {
       setError(err.message);
     } finally {
@@ -73,7 +40,9 @@ export default function TopRatedBathrooms() {
   }
 
   async function fetchBathroomsBySearch(term) {
-    if (!term) {
+    const trimmed = (term ?? "").trim();
+
+    if (!trimmed) {
       setSearchTerm("");
       fetchTopBathrooms();
       return;
@@ -82,15 +51,17 @@ export default function TopRatedBathrooms() {
     try {
       setLoading(true);
       setError("");
-      setSearchTerm(term);
+      setSearchTerm(trimmed);
 
       const res = await fetch(
-        `${API_BASE_URL}?search=${encodeURIComponent(term)}`
+        `${API_BASE_URL}?search=${encodeURIComponent(trimmed)}`
       );
       if (!res.ok) throw new Error("Failed to search bathrooms");
 
       const data = await res.json();
-      setBathrooms(data.slice(0, 5));
+
+      // store full search results, then filters will reduce + slice to 5
+      setAllBathrooms(data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -102,6 +73,58 @@ export default function TopRatedBathrooms() {
     fetchTopBathrooms();
   }, []);
 
+  // Build building options from whatever is currently loaded (top or search results)
+  const buildingOptions = useMemo(() => {
+    const buildings = Array.from(
+      new Set(
+        (allBathrooms || [])
+          .map((b) => b.building)
+          .filter(Boolean)
+      )
+    );
+    return ["All", ...buildings];
+  }, [allBathrooms]);
+
+  // Apply filters + search, then show only top 5
+  const filteredBathrooms = useMemo(() => {
+    const q = (searchTerm || "").toLowerCase();
+
+    const filtered = (allBathrooms || []).filter((b) => {
+      // search like first component (building/name/room-ish)
+      const matchesSearch =
+        !q ||
+        (b.building || "").toLowerCase().includes(q) ||
+        (b.name || "").toLowerCase().includes(q) ||
+        (b.room || b.location_room || "").toLowerCase().includes(q);
+
+      // gender filter (expects b.gender_type like your other component)
+      const matchesGender =
+        genderFilter === "all" || b.gender_type === genderFilter;
+
+      // building filter
+      const matchesBuilding =
+        buildingFilter === "All" || b.building === buildingFilter;
+
+      // accessible filter (expects boolean-ish)
+      const matchesAccessible = !accessibleOnly || Boolean(b.accessible);
+
+      return (
+        matchesSearch &&
+        matchesGender &&
+        matchesBuilding &&
+        matchesAccessible
+      );
+    });
+
+    return filtered.slice(0, 5);
+  }, [
+    allBathrooms,
+    searchTerm,
+    genderFilter,
+    buildingFilter,
+    accessibleOnly,
+  ]);
+
   function handleSelectBathroom(bathroom) {
     navigate(`/bathrooms/${bathroom.id}`);
   }
@@ -109,19 +132,101 @@ export default function TopRatedBathrooms() {
   return (
     <div className="trb-page">
       <h1>Top Rated Bathrooms</h1>
-      <button onClick={() => navigate('/')}>Home</button>
+      <button onClick={() => navigate("/")}>Home</button>
 
-      <SearchBar
-        onSearch={fetchBathroomsBySearch}
-        initialValue={searchTerm}
-      />
+      {/* Search + Filter bar (same structure as first component) */}
+      <div className="search-filter-bar">
+        <div className="search-input-wrapper">
+          <span className="search-icon">🔍</span>
+          <input
+            type="text"
+            placeholder="Search bathrooms, buildings, rooms..."
+            value={searchTerm}
+            onChange={(e) => {
+              const v = e.target.value;
+              setSearchTerm(v);
+              fetchBathroomsBySearch(v);
+            }}
+          />
+        </div>
+
+        <div className="filter-wrapper">
+          <button
+            className="filter-button"
+            onClick={() => setShowFilters(!showFilters)}
+            type="button"
+          >
+            Filters ▼
+          </button>
+
+          {showFilters && (
+            <div className="filter-dropdown">
+              {/* Building filter */}
+              <div className="filter-group">
+                <label>Building Name:</label>
+                <select
+                  value={buildingFilter}
+                  onChange={(e) => setBuildingFilter(e.target.value)}
+                >
+                  {buildingOptions.map((b, i) => (
+                    <option key={i} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Gender filter */}
+              <div className="filter-group">
+                <label>Gender:</label>
+                <select
+                  value={genderFilter}
+                  onChange={(e) => setGenderFilter(e.target.value)}
+                >
+                  <option value="all">All</option>
+                  <option value="Men">Men</option>
+                  <option value="Women">Women</option>
+                  <option value="Gender-Neutral">Gender-Neutral</option>
+                </select>
+              </div>
+
+              {/* Accessible only checkbox */}
+              <div className="filter-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={accessibleOnly}
+                    onChange={(e) => setAccessibleOnly(e.target.checked)}
+                  />{" "}
+                  Accessible Only
+                </label>
+              </div>
+
+              {/* Clear filters */}
+              <div className="filter-group">
+                <button
+                  className="clear-filters-button"
+                  type="button"
+                  onClick={() => {
+                    setGenderFilter("all");
+                    setBuildingFilter("All");
+                    setAccessibleOnly(false);
+                  }}
+                >
+                  Clear Filters
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
 
       {loading && <p>Loading bathrooms…</p>}
       {error && <p>{error}</p>}
 
       {!loading && !error && (
         <ul className="trb-list">
-          {bathrooms.map((b) => (
+          {filteredBathrooms.map((b) => (
             <li key={b.id} onClick={() => handleSelectBathroom(b)}>
               <BathroomCard
                 name={b.name}
