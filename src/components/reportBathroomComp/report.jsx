@@ -1,5 +1,22 @@
-/* This code demonstrates object-oriented programming in JavaScript.
-   SOLID design principles, with a specific pattern */
+/*
+  BathroomReport Code – OOP, SOLID, and Design Pattern Overview
+
+  - OOP Concepts:
+    * Encapsulation: Classes store their own data and behavior (e.g., BathroomReport).
+    * Abstraction: ReportRepository defines abstract methods; service layer doesn't care about storage details.
+    * Inheritance & Polymorphism: Repositories extend ReportRepository; service works with any repository type.
+
+  - SOLID Principles:
+    * SRP: Each class has a single responsibility (data, storage, or logic).
+    * OCP: New repositories can be added without changing the service.
+    * LSP & DIP: Subclasses can replace base class; service depends on abstraction, not concrete implementation.
+
+  - Design Pattern:
+    * Repository Pattern: Separates data access from business logic.
+    * Dependency Injection: Service receives a repository in its constructor, enabling loose coupling.
+*/
+
+
 
 /* =========
    Data Model
@@ -98,4 +115,6 @@ class BathroomReport {
   
   // View all reports
   console.log(reportService.getAllReports());
+  
+
   
