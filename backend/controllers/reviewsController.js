@@ -290,7 +290,42 @@ const addBathroom = async (req, res) => {
   }
 };
 
+// POST a new bathroom report
+const postBathroomReport = async (req, res) => {
+  try {
+    const {
+      reporter_name,
+      description,
+      urgency,
+      building_name,
+      location_room,
+      floor,
+    } = req.body;
 
+    // Basic validation
+    if (!building_name || !reporter_name || !urgency || !description || !floor) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Insert into Supabase
+    const { data, error } = await supabase
+      .from("BathroomReports")
+      .insert([
+        { reporter_name, description, urgency, building_name, location_room, floor }
+      ])
+      .select();
+
+    if (error) {
+      console.error("Supabase insert error:", error);
+      return res.status(500).json({ error: "Failed to insert report" });
+    }
+
+    res.status(201).json({ message: "Bathroom report created", data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
 
 
 
@@ -304,4 +339,5 @@ module.exports = {
     getRecentActivity,
     getReview,
     addBathroom,
+    postBathroomReport
 };

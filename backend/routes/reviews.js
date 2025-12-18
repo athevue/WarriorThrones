@@ -10,6 +10,7 @@ const {
   getRecentActivity,
   getReview,
   addBathroom,
+  postBathroomReport
 } = require("../controllers/reviewsController");
 
 // Get count of reviews
@@ -54,5 +55,8 @@ router.get("/:id", (req, res) => {
 
 // POST /api/reviews
 router.post("/", addBathroom);
+
+// POST new bathroom report
+router.post("/reports", postBathroomReport);
 
 module.exports = router;
