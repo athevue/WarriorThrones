@@ -1,5 +1,5 @@
 import React from "react";
-import "./RatingBar.css";
+import "./ratingBar.css";
 
 export default function RatingBar({ label, rating, maxRating = 5 }) {
   const percentage = (rating / maxRating) * 100;

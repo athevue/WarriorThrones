@@ -121,5 +121,30 @@ body {
 
   
 .inputText{
-  background: #FAD037;
+  background: white;
+  color: black;
+}
+
+.link-button{
+  background: none;
+  border: none;
+  color: #FAD037;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.submit-button {
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #FFC72C;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  gap: 0.5rem;
 }

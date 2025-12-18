@@ -87,12 +87,7 @@ export default function Header() {
               </label>
 
               <div className="flex">
-                <button
-                  type="button"
-                  onClick={() => setShowForm(false)}
-                >
-                  Cancel
-                </button>
+                
 
                 <p>
                   Don&apos;t have an account?{" "}
@@ -107,9 +102,11 @@ export default function Header() {
 
                 <button
                   type="submit"
+                  className="submit-button"
                 >
                   Login
                 </button>
+                
               </div>
             </form>
           </div>
