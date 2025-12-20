@@ -3,6 +3,7 @@ import { Star, MessageSquare } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./reviewCard.css";
 
+
 export default function ReviewCard({ review, loading }) {
   const navigate = useNavigate();
 
@@ -52,7 +53,8 @@ export default function ReviewCard({ review, loading }) {
       </div>
 
       {/* Image Placeholder */}
-      <div className="image-placeholder">Image Placeholder</div>
+      {/* <div className="image-placeholder">Image Placeholder</div> */}
+      {/* <img src={} alt="Logo" className="bathroom-logo"/> */}
 
       {/* Comments: NEED TO SPLIT AVAILABLILITY AND COMMENTSSSSSS */}
       <div className="review-comments">
