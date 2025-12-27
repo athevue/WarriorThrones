@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./browseCard.css";
 
@@ -8,9 +8,13 @@ export default function BrowseCard({ setBathroomCount }) {
 
   const [showFilters, setShowFilters] = useState(false);
   const [genderFilter, setGenderFilter] = useState("all");
-  const [buildingFilter, setBuildingFilter] = useState("All"); // start with capital "All"
+  const [buildingFilter, setBuildingFilter] = useState("All");
   const [accessibleOnly, setAccessibleOnly] = useState(false);
 
+  // Ref for click-outside detection
+  const filterRef = useRef(null);
+
+  // Fetch all reviews
   useEffect(() => {
     async function fetchAllReviews() {
       try {
@@ -35,7 +39,24 @@ export default function BrowseCard({ setBathroomCount }) {
     fetchAllReviews();
   }, []);
 
-  // Filter reviews based on search + filters
+  // Click outside to close filters
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target)
+      ) {
+        setShowFilters(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Filter logic
   const filteredReviews = allReviews.filter((review) => {
     const q = searchTerm.toLowerCase();
 
@@ -55,13 +76,16 @@ export default function BrowseCard({ setBathroomCount }) {
     return matchesSearch && matchesGender && matchesBuilding && matchesAccessible;
   });
 
-  // Update bathroom count for parent component
+  // Update parent count
   useEffect(() => {
     setBathroomCount(filteredReviews.length);
   }, [filteredReviews, setBathroomCount]);
 
-  // Build building options, only one "All" at the top
-  const buildingOptions = ["All", ...Array.from(new Set(allReviews.map((r) => r.building_name)))];
+  // Building options
+  const buildingOptions = [
+    "All",
+    ...Array.from(new Set(allReviews.map((r) => r.building_name))),
+  ];
 
   return (
     <div className="browse-card-container">
@@ -77,17 +101,16 @@ export default function BrowseCard({ setBathroomCount }) {
           />
         </div>
 
-        <div className="filter-wrapper">
+        <div className="filter-wrapper" ref={filterRef}>
           <button
             className="filter-button"
-            onClick={() => setShowFilters(!showFilters)}
+            onClick={() => setShowFilters((prev) => !prev)}
           >
             Filters ▼
           </button>
 
           {showFilters && (
             <div className="filter-dropdown">
-
               {/* Building filter */}
               <div className="filter-group">
                 <label>Building Name:</label>
@@ -117,7 +140,7 @@ export default function BrowseCard({ setBathroomCount }) {
                 </select>
               </div>
 
-              {/* Accessible only checkbox */}
+              {/* Accessible */}
               <div className="filter-group">
                 <label>
                   <input
@@ -129,20 +152,19 @@ export default function BrowseCard({ setBathroomCount }) {
                 </label>
               </div>
 
-              {/* Clear filters button */}
+              {/* Clear filters */}
               <div className="filter-group">
                 <button
                   className="clear-filters-button"
                   onClick={() => {
                     setGenderFilter("all");
-                    setBuildingFilter("All"); // reset to capital "All"
+                    setBuildingFilter("All");
                     setAccessibleOnly(false);
                   }}
                 >
                   Clear Filters
                 </button>
               </div>
-
             </div>
           )}
         </div>
@@ -153,15 +175,14 @@ export default function BrowseCard({ setBathroomCount }) {
         <p className="no-results">No results found</p>
       ) : (
         <div className="cards-wrapper">
-          {filteredReviews.map((review, index) => (
-            <Link // using Link for client-side routing
-              to={`/reviewDetail/${review.id}`} // always use numeric ID now
-              key={index}
+          {filteredReviews.map((review) => (
+            <Link
+              to={`/reviewDetail/${review.id}`}
+              key={review.id}
               className="review-card-link"
             >
               <div className="review-card">
                 <h3>{review.building_name}</h3>
-                <p></p>
                 <p><strong>Room:</strong> {review.location_room}</p>
                 <p><strong>Gender:</strong> {review.gender_type}</p>
                 <p><strong>Overall Rating:</strong> {review.overall_rating}</p>
