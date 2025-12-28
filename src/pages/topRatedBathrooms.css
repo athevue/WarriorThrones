@@ -77,9 +77,8 @@
 
 .trb-list {
   list-style: none;
-  padding: 0;
+  padding: 20px;
   margin: 0;
-  display: grid;
   gap: 18px;
   justify-content: center;
 }

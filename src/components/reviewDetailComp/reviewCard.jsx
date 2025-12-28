@@ -25,7 +25,7 @@ export default function ReviewCard({ review, loading }) {
   return (
     <div className="review-card2">
       {/* Rating + Stars */}
-      <div className="review-card-header">
+      <div className="review-card-heaxder">
         <div className="rating-section">
           <div
             className="rating-number"

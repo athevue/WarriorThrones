@@ -7,7 +7,7 @@ export default function BathroomCard({ name, rating, location, numReviews }) {
             <h2 className="bathroom-name">{name}</h2>
             <p className="bathroom-rating">Rating: {rating} ⭐</p>
             <p className="bathroom-location">Location: {location}</p>
-            <p className="bathroom-reviews">{numReviews} Reviews</p>
+            <p className="bathroom-reviews">{numReviews} Review</p>
         </div>
     );
 }

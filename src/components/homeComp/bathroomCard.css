@@ -1,14 +1,13 @@
 /* Container for each bathroom card */
 .bathroom-card {
-    display: flex;
-    flex-direction: column;
-    background-color: #ffffff; 
-    border: 1px solid #e0e0e0; 
-    border-radius: 12px; 
-    padding: 1.5em 1.2em;
-    margin: 1em auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+    border-left: 6px solid #0C584F;
 }
 
 .bathroom-card:hover {
