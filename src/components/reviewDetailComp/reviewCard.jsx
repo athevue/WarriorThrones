@@ -15,7 +15,7 @@ export default function ReviewCard({ review, loading }) {
   const getRatingColor = (rating) => {
     if (rating >= 8) return "#0C584F"; // Green
     if (rating >= 5) return "#FFC72C"; // Yellow
-    return "#E63946";
+    return "#E63946"; // Red
   };
 
   const handleAddReview = () => {
@@ -58,7 +58,7 @@ export default function ReviewCard({ review, loading }) {
 
       {/* Comments: NEED TO SPLIT AVAILABLILITY AND COMMENTSSSSSS */}
       <div className="review-comments">
-        {review?.Comments || "No comments yet."}  
+        {review?.Comments ?? "No comments available."}  
       </div>
     </div>
   );
