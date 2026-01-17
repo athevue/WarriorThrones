@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./recentActivity.css";
 
 const API_URL = "http://localhost:5001/api/reviews/recent";
@@ -43,20 +44,26 @@ export default function RecentActivity() {
 
       {error && <p className="error">{error}</p>}
 
-      {activity.map((item, index) => (
-        <div key={index} className="activity-card">
+      {activity.map((bathroom, index) => (
+
+        // Wrap each activity card in its own Link
+        <Link
+        to={`/reviewDetail/${bathroom.id}`} // use bathroom.id from API
+        key={bathroom.id}
+        className="activity-link"
+      >
+        <div className="activity-card">
           <div className="activity-left">
-            <strong>{item.building}</strong>
-            <div className="activity-time">
-              {timeAgo(item.createdAt)}
-            </div>
+            <strong>{bathroom.building}</strong>
+            <div className="activity-time">{timeAgo(bathroom.createdAt)}</div>
           </div>
 
           <div className="activity-rating">
-            {item.rating}
+            {bathroom.rating}
             <span className="star">★</span>
           </div>
         </div>
+      </Link>
       ))}
     </div>
 

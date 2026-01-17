@@ -23,6 +23,7 @@
 .activity-left {
   display: flex;
   flex-direction: column;
+  color: #0C584F;
 }
 
 .activity-text {
@@ -39,14 +40,14 @@
 .activity-rating {
   font-size: 20px;
   font-weight: 700;
-  color: #16a34a;
+  color: #FFC72C;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
 .star {
-  color: #9ca3af;
+  color: #FFC72C;
 }
 
 .error {

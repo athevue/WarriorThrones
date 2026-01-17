@@ -144,13 +144,14 @@ async function getRecentActivity(req, res) {
   try {
     const { data, error } = await supabase
       .from("BathroomRatings")
-      .select("building_name, OverallRating, created_at")
+      .select("id, building_name, OverallRating, created_at")
       .order("created_at", { ascending: false })
       .limit(3);
 
     if (error) throw error;
 
     const activity = data.map((row) => ({
+      id: row.id,
       building: row.building_name,
       rating: row.OverallRating,
       createdAt: row.created_at,

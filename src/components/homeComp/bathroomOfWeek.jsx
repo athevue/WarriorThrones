@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BathroomCard from "./bathroomCard";
+import { Link } from "react-router-dom";
 import "./bathroomOfWeek.css";
 
 const API_BASE_URL = "http://localhost:5001/api/reviews";
@@ -36,12 +37,17 @@ export default function BathroomOfWeek() {
     <div className = "weekSection">
       <h2 className="weekTitle">Bathroom of the Week</h2>
       <div className="bow-container">
-        <BathroomCard
-          name={bathroom.name}
-          rating={bathroom.averageRating}
-          location={bathroom.building}
-          numReviews={1}
-        />
+      <Link to={`/reviewDetail/${bathroom.id}`} className="bow-link">
+          <BathroomCard
+            name={bathroom.name}
+            rating={bathroom.averageRating}
+            location={bathroom.building}
+            numReviews={1}
+          />
+        </Link>
+        
+
+        
       </div>
 
     </div>
