@@ -58,7 +58,7 @@ export default function ReviewCard({ review, loading }) {
 
       {/* Comments: NEED TO SPLIT AVAILABLILITY AND COMMENTSSSSSS */}
       <div className="review-comments">
-        {review?.Comments ?? "No comments available."}  
+        {review?.comments ?? "No comments available."}  
       </div>
     </div>
   );

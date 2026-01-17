@@ -64,7 +64,7 @@ export default function AddBathroom() {
     location_room: "",
     gender_type: "Unisex",
     num_of_stalls: "",
-    Comments: ""
+    comments: ""
   });
 
   const [ratings, setRatings] = useState(INITIAL_RATINGS);
@@ -106,7 +106,7 @@ export default function AddBathroom() {
         ...form,
         OverallRating: overall_Rating, // <-- dynamic
         num_of_stalls: form.num_of_stalls || null,
-        Comments: form.Comments?.trim() || null,
+        comments: form.comments?.trim() || null,
         ...ratings,
         ...amenities
       };
@@ -243,9 +243,9 @@ export default function AddBathroom() {
               <div className="ab-field">
                 <label>Comments</label>
                 <textarea
-                  name="Comments"
+                  name="comments"
                   rows={3}
-                  value={form.Comments}
+                  value={form.comments}
                   onChange={onChange}
                 />
               </div>

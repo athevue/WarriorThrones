@@ -192,6 +192,7 @@ const addBathroom = async (req, res) => {
       location_room,
       gender_type,
       num_of_stalls,
+      comments,
       // Existing ratings
       cleanliness_1_10,
       odor_1_10,
@@ -228,7 +229,6 @@ const addBathroom = async (req, res) => {
       shower,
       speakers_music_1_or_0,
       sanitization_schedule_posted,
-      Comments,
       OverallRating
     } = req.body;
 
@@ -277,7 +277,7 @@ const addBathroom = async (req, res) => {
           shower: shower || false,
           speakers_music_1_or_0: speakers_music_1_or_0 || 0,
           sanitization_schedule_posted: sanitization_schedule_posted || 0,
-          Comments: Comments || null,
+          comments: comments || null,
           OverallRating: OverallRating || null
         }
       ])
