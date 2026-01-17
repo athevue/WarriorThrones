@@ -228,6 +228,7 @@ const addBathroom = async (req, res) => {
       shower,
       speakers_music_1_or_0,
       sanitization_schedule_posted,
+      Comments,
       OverallRating
     } = req.body;
 
@@ -276,6 +277,7 @@ const addBathroom = async (req, res) => {
           shower: shower || false,
           speakers_music_1_or_0: speakers_music_1_or_0 || 0,
           sanitization_schedule_posted: sanitization_schedule_posted || 0,
+          Comments: Comments || null,
           OverallRating: OverallRating || null
         }
       ])
